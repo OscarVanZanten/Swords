@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 using Swords.Rendering;
 using Swords.Util;
+using Swords.Entities.Behaviors;
 
 namespace Swords.Entities
 {
@@ -17,13 +18,21 @@ namespace Swords.Entities
     {
         private Location location;
         private Texture2D texture;
+        private List<Behavior> behaviors;
 
-
-        public Entity(Location location, Texture2D texture)
+        public Entity(Location location, Texture2D texture, List<Behavior> behaviors)
         {
             this.location = location;
             this.texture = texture;
+            this.behaviors = behaviors;
+
+            foreach (Behavior behavior in behaviors)
+            {
+                behavior.Start();
+            }
         }
+
+        public Entity(Location location, Texture2D texture) : this ( location, texture, new List<Behavior>()) {}
 
 
         public ISprite[] GetSprites()
@@ -33,11 +42,16 @@ namespace Swords.Entities
 
         public void Update()
         {
-            Vector2 vec = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
-            vec.Y = -vec.Y;
+            foreach (Behavior behavior in behaviors)
+            {
+                behavior.Update();
+            }
+        }
 
-            location.Add(vec * 3);
-            location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
+        public void AddBehavior(Behavior behavior)
+        {
+            behaviors.Add(behavior);
+            behavior.Start();
         }
     }
 }

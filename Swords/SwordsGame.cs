@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Swords.Util;
 using Swords.Rendering;
 using Swords.Entities;
+using Swords.Entities.Behaviors;
 
 namespace Swords
 {
@@ -46,7 +47,10 @@ namespace Swords
 
             Renderer = new Renderer(graphics, spriteBatch);
 
-            test = new Entity(new Location(100, 100, 0), grass);
+            Location loc = new Location(100, 100, 0);
+            test = new Entity(loc, grass);
+            test.AddBehavior(new PlayerMovement(loc));
+
             Renderer.Register(test);
         }
 
