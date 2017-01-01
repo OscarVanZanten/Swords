@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using Swords.Util;
+using Swords.Content;
 using Swords.Rendering;
 using Swords.Entities;
 using Swords.Entities.Behaviors;
@@ -42,14 +43,11 @@ namespace Swords
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            grass = Content.Load<Texture2D>("Grass");
-
             Renderer = new Renderer(graphics, spriteBatch);
 
-            Location loc = new Location(100, 100, 0);
-            test = new Entity(loc, grass);
-            test.AddBehavior(new PlayerMovement(loc));
+            ContentRegistry.Textures.Add("Grass", Content.Load<Texture2D>("Grass"));
+
+            test = EntityFactory.GetEntity(EntityType.PLAYER, new Location(100, 100, 0));
 
             Renderer.Register(test);
         }
