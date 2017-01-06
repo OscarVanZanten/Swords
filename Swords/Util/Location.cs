@@ -32,7 +32,8 @@ namespace Swords.Util
             vector += vec;
         }
 
-        public void IncRotation(float rot) {
+        public void IncRotation(float rot)
+        {
             rotation += rot;
         }
 
@@ -44,11 +45,21 @@ namespace Swords.Util
         public void SetRotation(Vector2 rot)
         {
             rot.Normalize();
-            float d =(float) (Math.Atan(rot.X / rot.Y));
+            float d = (float)(Math.Atan2(rot.X , rot.Y));
             if (d == d)
             {
                 rotation = d;
             }
+        }
+
+        public static Location Add(Location l1, Location l2)
+        {
+            double x = l2.vector.X * Math.Cos(l1.rotation) - l2.vector.Y * Math.Sin(l1.rotation);
+            double y = l2.vector.X * Math.Sin(l1.rotation) + l2.vector.Y * Math.Cos(l1.rotation);
+
+            Vector2 vec = new Vector2((float)x, (float)y);
+
+            return new Location(l1.vector + vec, l1.rotation + l2.rotation);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Swords.Entities
                 case EntityType.PLAYER:
                     entity = new Entity(loc, ContentRegistry.Textures.Get("Grass"));
                     entity.AddBehavior(new PlayerMovement(loc));
+                    entity.AddChild(new Entity(new Location(10,10, (float)Math.PI), ContentRegistry.Textures.Get("Grass")));
                     break;
             }
 
