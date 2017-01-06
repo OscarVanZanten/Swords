@@ -49,6 +49,7 @@ namespace Swords.Entities
             }
             foreach (Entity entity in childeren)
             {
+                sprites[count++] = new Sprite(Location.Add(location, entity.location ), entity.texture);
             }
 
             return sprites;
