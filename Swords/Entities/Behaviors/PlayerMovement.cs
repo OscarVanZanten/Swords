@@ -13,16 +13,11 @@ namespace Swords.Entities.Behaviors
 {
     class PlayerMovement : Behavior
     {
-        private Entity entity;
+        Entity entity;
 
-        public PlayerMovement(Entity entity)
+        public void Start(Entity entity)
         {
             this.entity = entity;
-        }
-
-        public void Start()
-        {
-
         }
 
         public void Update()
@@ -33,5 +28,11 @@ namespace Swords.Entities.Behaviors
             entity.Location.Add(vec * 3);
             entity.Location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
         }
+
+        public object Clone()
+        {
+            return new PlayerMovement();
+        }
+
     }
 }

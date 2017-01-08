@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Swords.Entities.Behaviors
 {
-    interface Behavior
+    interface Behavior : ICloneable
     {
-        void Start();
+        void Start(Entity entity);
         void Update();
     }
 }

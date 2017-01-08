@@ -10,24 +10,22 @@ using Swords.Entities.Behaviors;
 
 namespace Swords.Entities
 {
-    enum EntityType
-    {
-        PLAYER
-    }
-
     class EntityFactory
     {
-        public static Entity GetEntity(EntityType type, Location loc)
+        private static Dictionary<string, Entity> entities = new Dictionary<string, Entity>();
+
+        public static void Register(Entity entity)
+        {
+            entities.Add(entity.Name, entity);
+        }
+
+        public static Entity GetEntity(string name, Location loc)
         {
             Entity entity = null;
-
-            switch (type)
+            entities.TryGetValue(name, out entity);
+            if (entity != null)
             {
-                case EntityType.PLAYER:
-                    entity = new Entity(loc, ContentRegistry.Textures.Get("Grass"));
-                    entity.AddBehavior(new PlayerMovement(entity));
-                    entity.AddChild(new Entity(new Location(10,10, (float)Math.PI), ContentRegistry.Textures.Get("Grass")));
-                    break;
+                entity.Location = loc;
             }
 
             return entity;

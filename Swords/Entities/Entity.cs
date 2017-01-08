@@ -12,29 +12,34 @@ using Swords.Entities.Behaviors;
 
 namespace Swords.Entities
 {
-    class Entity : IEntity, Renderable
+    class Entity : IEntity, Renderable, ICloneable
     {
-        public Location Location { get { return location; } }
+        public string Name { get { return name; } }
+        public Location Location { get { return location; } set { location = value; } }
 
+        private string name;
         private Location location;
         private Texture2D texture;
         private List<Behavior> behaviors;
         private List<Entity> childeren;
 
-        public Entity(Location location, Texture2D texture)
+        private Entity(Location location, Texture2D texture, string name, List<Behavior> behaviors, List<Entity> childeren)
         {
+            this.name = name;
             this.location = location;
             this.texture = texture;
-            this.behaviors = new List<Behavior>();
-            this.childeren = new List<Entity>();
-
+            this.behaviors = behaviors;
+            this.childeren = childeren;
             foreach (Behavior behavior in behaviors)
             {
-                behavior.Start();
+                behavior.Start(this);
             }
+
         }
 
-        public Entity(Location location) : this(location, null) { }
+        public Entity(Location location, Texture2D texture, string name) : this(location, texture, name, new List<Behavior>(), new List<Entity>()) { }
+        public Entity(Location location, string name) : this(location, null, name) { }
+        public Entity(Location location) : this(location, null, "Undefined") { }
 
         public ISprite[] GetSprites()
         {
@@ -68,15 +73,42 @@ namespace Swords.Entities
             }
         }
 
-        public void AddBehavior(Behavior behavior)
+        public Entity AddBehavior(Behavior behavior)
         {
             behaviors.Add(behavior);
-            behavior.Start();
+            behavior.Start(this);
+
+            return this;
         }
 
-        public void AddChild(Entity entity)
+        public Entity AddChild(Entity entity)
         {
             childeren.Add(entity);
+            return this;
+        }
+
+        public object Clone()
+        {
+            List<Entity> childeren = new List<Entity>();
+            List<Behavior> behaviors = new List<Behavior>();
+
+            foreach (Entity child in this.childeren)
+            {
+                childeren.Add((Entity)child.Clone());
+            }
+
+            foreach (Behavior behavior in this.behaviors)
+            {
+                behaviors.Add((Behavior)behavior.Clone());
+            }
+            Entity entity = new Entity(new Location(location.Vector.X, location.Vector.Y), texture, name, behaviors, childeren);
+
+            foreach (Behavior behavior in entity.behaviors)
+            {
+                behavior.Start(entity);
+            }
+
+            return entity;
         }
     }
 }

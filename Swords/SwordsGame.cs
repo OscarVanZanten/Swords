@@ -26,8 +26,6 @@ namespace Swords
 
         private Entity test;
 
-        private Texture2D grass;
-
         public SwordsGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -37,7 +35,7 @@ namespace Swords
         protected override void Initialize()
         {
             base.Initialize();
-         
+
         }
 
         protected override void LoadContent()
@@ -47,7 +45,14 @@ namespace Swords
 
             ContentRegistry.Textures.Add("Grass", Content.Load<Texture2D>("Grass"));
 
-            test = EntityFactory.GetEntity(EntityType.PLAYER, new Location(100, 100, 0));
+            EntityFactory.Register(
+                new Entity(null, ContentRegistry.Textures.Get("Grass"), "Player")
+                    .AddBehavior(new PlayerMovement())
+                    .AddChild(new Entity(new Location(32, 32, 0), ContentRegistry.Textures.Get("Grass"),"Child")));
+
+
+
+            test = EntityFactory.GetEntity("Player", new Location(100, 100, 0));
 
             Renderer.Register(test);
         }
