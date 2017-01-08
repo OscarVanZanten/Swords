@@ -47,7 +47,11 @@ namespace Swords.Entities
 
             foreach (Entity child in childeren)
             {
-                sprites.AddRange(child.GetSprites());
+                foreach (Sprite sprite in child.GetSprites())
+                {
+                    sprite.Location = Location.Add(location, sprite.Location);
+                    sprites.Add(sprite);
+                }
             }
             return sprites.ToArray();
         }

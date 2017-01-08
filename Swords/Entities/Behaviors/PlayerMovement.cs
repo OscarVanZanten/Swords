@@ -13,11 +13,11 @@ namespace Swords.Entities.Behaviors
 {
     class PlayerMovement : Behavior
     {
-        private Location location;
+        private Entity entity;
 
-        public PlayerMovement(Location location)
+        public PlayerMovement(Entity entity)
         {
-            this.location = location;
+            this.entity = entity;
         }
 
         public void Start()
@@ -30,8 +30,8 @@ namespace Swords.Entities.Behaviors
             Vector2 vec = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
             vec.Y = -vec.Y;
 
-            location.Add(vec * 3);
-            location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
+            entity.Location.Add(vec * 3);
+            entity.Location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
         }
     }
 }
