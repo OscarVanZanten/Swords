@@ -25,6 +25,7 @@ namespace Swords.Entities
             entities.TryGetValue(name, out entity);
             if (entity != null)
             {
+                entity = (Entity)entity.Clone();
                 entity.Location = loc;
             }
 

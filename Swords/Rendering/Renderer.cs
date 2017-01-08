@@ -22,14 +22,16 @@ namespace Swords.Rendering
             this.graphics = graphics;
             this.spritebatch = spritebatch;
 
-            graphics.SynchronizeWithVerticalRetrace = true;
+            graphics.SynchronizeWithVerticalRetrace = false;
             graphics.PreferMultiSampling = true;
+            graphics.ToggleFullScreen();
             graphics.ApplyChanges();
             Camera.Zoom = 2;
         }
 
         public void Render()
         {
+
             spritebatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
             foreach (Renderable render in renderables)
             {

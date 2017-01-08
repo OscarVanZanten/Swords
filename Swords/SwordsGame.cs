@@ -13,6 +13,7 @@ using Swords.Content;
 using Swords.Rendering;
 using Swords.Entities;
 using Swords.Entities.Behaviors;
+using Swords.Levels;
 
 namespace Swords
 {
@@ -24,8 +25,6 @@ namespace Swords
         //rendering
         public static Renderer Renderer;
 
-        private Entity test;
-
         public SwordsGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -35,6 +34,7 @@ namespace Swords
         protected override void Initialize()
         {
             base.Initialize();
+            Level.Instance.Init();
 
         }
 
@@ -46,15 +46,17 @@ namespace Swords
             ContentRegistry.Textures.Add("Grass", Content.Load<Texture2D>("Grass"));
 
             EntityFactory.Register(
-                new Entity(null, ContentRegistry.Textures.Get("Grass"), "Player")
+                new Entity(new Location(0, 0), ContentRegistry.Textures.Get("Grass"), "Player")
                     .AddBehavior(new PlayerMovement())
-                    .AddChild(new Entity(new Location(32, 32, 0), ContentRegistry.Textures.Get("Grass"),"Child")));
+                    .AddChild(new Entity(new Location(32, 32, 0), ContentRegistry.Textures.Get("Grass"), "Child")));
 
 
 
-            test = EntityFactory.GetEntity("Player", new Location(100, 100, 0));
+            Level.Instance.SpawnEntity("Player", new Location(100, 100, 0));
 
-            Renderer.Register(test);
+
+            Entity entity = Level.Instance.SpawnEntity("Player", new Location(300, 100, 0));
+             Console.WriteLine( entity.RemoveChild("Child").Name);
         }
 
         protected override void UnloadContent()
@@ -67,10 +69,7 @@ namespace Swords
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-
-
-            test.Update();
-
+            Level.Instance.Update();
 
             base.Update(gameTime);
         }

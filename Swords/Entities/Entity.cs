@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Swords.Rendering;
 using Swords.Util;
 using Swords.Entities.Behaviors;
+using Swords.Levels;
 
 namespace Swords.Entities
 {
@@ -85,6 +86,24 @@ namespace Swords.Entities
         {
             childeren.Add(entity);
             return this;
+        }
+
+        public Entity RemoveChild(string Name)
+        {
+            Entity entity = null;
+            foreach (Entity child in childeren)
+            {
+                {
+                    entity = child;
+                    break;
+                }
+            }
+            return entity;
+        }
+
+        public void Remove()
+        {
+            Level.Instance.RemoveEntity(this);
         }
 
         public object Clone()
