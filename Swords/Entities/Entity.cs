@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 using Swords.Rendering;
 using Swords.Util;
@@ -16,6 +14,8 @@ namespace Swords.Entities
 {
     class Entity : IEntity, Renderable
     {
+        public Location Location { get { return location; } }
+
         private Location location;
         private Texture2D texture;
         private List<Behavior> behaviors;
@@ -38,21 +38,18 @@ namespace Swords.Entities
 
         public ISprite[] GetSprites()
         {
-            int length = childeren.Count;
-            if (texture != null) length++;
-            ISprite[] sprites = new ISprite[length];
+            List<ISprite> sprites = new List<ISprite>();
 
-            int count = 0;
             if (texture != null)
             {
-                sprites[count++] = new Sprite(location, texture);
-            }
-            foreach (Entity entity in childeren)
-            {
-                sprites[count++] = new Sprite(Location.Add(location, entity.location ), entity.texture);
+                sprites.Add(new Sprite(location, texture));
             }
 
-            return sprites;
+            foreach (Entity child in childeren)
+            {
+                sprites.AddRange(child.GetSprites());
+            }
+            return sprites.ToArray();
         }
 
         public void Update()
