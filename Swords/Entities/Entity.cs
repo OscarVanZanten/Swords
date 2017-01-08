@@ -93,11 +93,13 @@ namespace Swords.Entities
             Entity entity = null;
             foreach (Entity child in childeren)
             {
+                if (child.Name.Equals(Name))
                 {
                     entity = child;
                     break;
                 }
             }
+            childeren.Remove(entity);
             return entity;
         }
 
