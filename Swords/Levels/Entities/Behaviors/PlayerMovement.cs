@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 using Swords.Util;
 
-namespace Swords.Entities.Behaviors
+namespace Swords.Levels.Entities.Behaviors
 {
     class PlayerMovement : Behavior
     {

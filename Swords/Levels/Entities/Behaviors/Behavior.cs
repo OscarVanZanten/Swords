@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Swords.Rendering;
-
-namespace Swords.Entities
+namespace Swords.Levels.Entities.Behaviors
 {
-    interface IEntity
+    interface Behavior : ICloneable
     {
+        void Start(Entity entity);
         void Update();
-
     }
 }

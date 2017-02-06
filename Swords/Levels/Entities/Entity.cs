@@ -8,10 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Swords.Rendering;
 using Swords.Util;
-using Swords.Entities.Behaviors;
+using Swords.Levels.Entities.Behaviors;
 using Swords.Levels;
 
-namespace Swords.Entities
+namespace Swords.Levels.Entities
 {
     class Entity : IEntity, Renderable, ICloneable
     {
@@ -48,7 +48,7 @@ namespace Swords.Entities
 
             if (texture != null)
             {
-                sprites.Add(new Sprite(location, texture));
+                sprites.Add(new Sprite(location, texture, Position.Relative));
             }
 
             foreach (Entity child in childeren)
@@ -105,7 +105,7 @@ namespace Swords.Entities
 
         public void Remove()
         {
-            Level.Instance.RemoveEntity(this);
+            Level.Instance.Remove(this);
         }
 
         public object Clone()

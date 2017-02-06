@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Swords.Util;
 using Swords.Content;
-using Swords.Entities.Behaviors;
+using Swords.Levels.Entities.Behaviors;
 
-namespace Swords.Entities
+namespace Swords.Levels.Entities
 {
     class EntityFactory
     {

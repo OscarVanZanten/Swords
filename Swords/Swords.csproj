@@ -39,11 +39,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Content\ContentRegistry.cs" />
-    <Compile Include="Entities\Behaviors\Behavior.cs" />
-    <Compile Include="Entities\Behaviors\PlayerMovement.cs" />
-    <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\EntityFactory.cs" />
-    <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Levels\Entities\Behaviors\Behavior.cs" />
+    <Compile Include="Levels\Entities\Behaviors\PlayerMovement.cs" />
+    <Compile Include="Levels\Entities\Entity.cs" />
+    <Compile Include="Levels\Entities\EntityFactory.cs" />
+    <Compile Include="Levels\Entities\IEntity.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\Renderable.cs" />

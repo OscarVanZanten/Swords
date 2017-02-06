@@ -11,8 +11,8 @@ using Microsoft.Xna.Framework.Input;
 using Swords.Util;
 using Swords.Content;
 using Swords.Rendering;
-using Swords.Entities;
-using Swords.Entities.Behaviors;
+using Swords.Levels.Entities;
+using Swords.Levels.Entities.Behaviors;
 using Swords.Levels;
 
 namespace Swords

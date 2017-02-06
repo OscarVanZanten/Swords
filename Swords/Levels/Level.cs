@@ -4,27 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Swords.Entities;
+using Swords.Levels.Entities;
 using Swords.Util;
 using Swords.Rendering;
+
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Swords.Levels
 {
     class Level : Renderable
     {
         private static Level instance;
-        public static Level Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new Level();
-                }
-                return instance;
-            }
-        }
-     
+        public static Level Instance { get { if (instance == null) { instance = new Level(); } return instance; } }
+        
+        public Texture2D Background { get; set;}
 
         private List<Entity> entities = new List<Entity>();
 
@@ -37,10 +30,8 @@ namespace Swords.Levels
         {
             foreach (Entity entity in entities)
             {
-              //  Console.WriteLine(entity.Childeren.Count);
                 entity.Update();
             }
-            //Console.WriteLine();
         }
 
         public Entity SpawnEntity(string name, Location location)
@@ -51,7 +42,7 @@ namespace Swords.Levels
             return entity;
         }
 
-        public void RemoveEntity(Entity entity)
+        public void Remove(Entity entity)
         {
             entities.Remove(entity);
             SwordsGame.Renderer.Remove(entity);
@@ -59,7 +50,14 @@ namespace Swords.Levels
 
         public ISprite[] GetSprites()
         {
-            return new ISprite[] { };
+            if (Background == null)
+            {
+                return new ISprite[] { };
+            }
+            else
+            {
+                return new ISprite[] { new Sprite(new Location(0, 0, 0), Background, Position.Absolute) };
+            }
         }
     }
 }

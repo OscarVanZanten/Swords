@@ -15,5 +15,6 @@ namespace Swords.Rendering
     {
         Texture2D Texture { get; set; }
         Location Location { get; set; }
+        Position Pos { get; set; }
     }
 }
