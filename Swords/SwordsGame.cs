@@ -47,7 +47,7 @@ namespace Swords
 
             EntityFactory.Register(
                 new Entity(new Location(0, 0), ContentRegistry.Textures.Get("Grass"), "Player")
-                    .AddBehavior(new PlayerMovement())
+                    .AddBehavior(new PlayerMovement(3))
                     .AddChild(new Entity(new Location(32, 32, 0), ContentRegistry.Textures.Get("Grass"), "Child")));
 
 

@@ -13,7 +13,13 @@ namespace Swords.Levels.Entities.Behaviors
 {
     class PlayerMovement : Behavior
     {
-        Entity entity;
+        private Entity entity;
+        private float speed;
+
+        public PlayerMovement(float speed)
+        {
+            this.speed = speed;
+        }
 
         public void Start(Entity entity)
         {
@@ -22,16 +28,28 @@ namespace Swords.Levels.Entities.Behaviors
 
         public void Update()
         {
-            Vector2 vec = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
-            vec.Y = -vec.Y;
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                Vector2 vec = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
+                vec.Y = -vec.Y;
 
-            entity.Location.Add(vec * 3);
-            entity.Location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
+                entity.Location.Add(vec * speed);
+                entity.Location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
+            }
+            else
+            {
+                Vector2 vec = new Vector2(
+                     (Keyboard.GetState().IsKeyDown(Keys.D) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.A) ? -1 : 0)
+                    , (Keyboard.GetState().IsKeyDown(Keys.S) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.W) ? -1 : 0)
+                    );
+
+                entity.Location.Add(vec * speed);
+            }
         }
 
         public object Clone()
         {
-            return new PlayerMovement();
+            return new PlayerMovement(speed);
         }
 
     }
