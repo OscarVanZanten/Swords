@@ -76,10 +76,40 @@ namespace Swords.Levels.Entities
 
         public Entity AddBehavior(Behavior behavior)
         {
-            behaviors.Add(behavior);
-            behavior.Start(this);
-
+            if (!HasBehavior(behavior.GetType()))
+            {
+                behaviors.Add(behavior);
+                behavior.Start(this);
+            }
             return this;
+        }
+
+        public bool HasBehavior<T>() where T : Behavior
+        {
+            return GetBehavior<T>() != null ? true : false;
+        }
+
+        private bool HasBehavior(Type type) {
+            foreach (Behavior b in behaviors)
+            {
+                if (b.GetType() == type)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public T GetBehavior<T>() where T : Behavior
+        {
+            foreach (Behavior b in behaviors)
+            {
+                if (b is T)
+                {
+                    return (T) b;
+                }
+            }
+            return default(T);
         }
 
         public Entity AddChild(Entity entity)
