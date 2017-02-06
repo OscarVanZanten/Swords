@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 
 using Swords.Rendering;
-using Swords.Util;
+using Swords.Levels.Entities.Animations;
 using Swords.Levels.Entities.Behaviors;
-using Swords.Levels;
+using Swords.Util;
 
 namespace Swords.Levels.Entities
 {
@@ -20,15 +20,15 @@ namespace Swords.Levels.Entities
 
         private string name;
         private Location location;
-        private Texture2D texture;
+        private AnimationPlayer animations;
         private List<Behavior> behaviors;
         private List<Entity> childeren;
 
-        private Entity(Location location, Texture2D texture, string name, List<Behavior> behaviors, List<Entity> childeren)
+        private Entity(Location location, AnimationPlayer animations, string name, List<Behavior> behaviors, List<Entity> childeren)
         {
             this.name = name;
             this.location = location;
-            this.texture = texture;
+            this.animations = animations;
             this.behaviors = behaviors;
             this.childeren = childeren;
             foreach (Behavior behavior in behaviors)
@@ -38,7 +38,7 @@ namespace Swords.Levels.Entities
 
         }
 
-        public Entity(Location location, Texture2D texture, string name) : this(location, texture, name, new List<Behavior>(), new List<Entity>()) { }
+        public Entity(Location location, AnimationPlayer animations, string name) : this(location, animations, name, new List<Behavior>(), new List<Entity>()) { }
         public Entity(Location location, string name) : this(location, null, name) { }
         public Entity(Location location) : this(location, null, "Undefined") { }
 
@@ -46,9 +46,9 @@ namespace Swords.Levels.Entities
         {
             List<ISprite> sprites = new List<ISprite>();
 
-            if (texture != null)
+            if (animations != null)
             {
-                sprites.Add(new Sprite(location, texture, Position.Relative));
+                sprites.Add(new Sprite(location, animations.CurrentSprite, Position.Relative));
             }
 
             foreach (Entity child in childeren)
@@ -64,6 +64,7 @@ namespace Swords.Levels.Entities
 
         public void Update()
         {
+            animations.Update();
             foreach (Entity child in childeren)
             {
                 child.Update();
@@ -152,7 +153,7 @@ namespace Swords.Levels.Entities
             {
                 behaviors.Add((Behavior)behavior.Clone());
             }
-            Entity entity = new Entity(new Location(location.Vector.X, location.Vector.Y), texture, name, behaviors, childeren);
+            Entity entity = new Entity(new Location(location.Vector.X, location.Vector.Y), animations, name, behaviors, childeren);
 
             foreach (Behavior behavior in entity.behaviors)
             {

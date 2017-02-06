@@ -42,6 +42,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Content\ContentRegistry.cs" />
+    <Compile Include="Levels\Entities\Animations\Animation.cs" />
+    <Compile Include="Levels\Entities\Animations\AnimationPlayer.cs" />
+    <Compile Include="Levels\Entities\Animations\Playable.cs" />
     <Compile Include="Levels\Entities\Behaviors\Behavior.cs" />
     <Compile Include="Levels\Entities\Behaviors\PlayerMovement.cs" />
     <Compile Include="Levels\Entities\Entity.cs" />

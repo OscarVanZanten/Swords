@@ -12,6 +12,7 @@ using Swords.Util;
 using Swords.Content;
 using Swords.Rendering;
 using Swords.Levels.Entities;
+using Swords.Levels.Entities.Animations;
 using Swords.Levels.Entities.Behaviors;
 using Swords.Levels;
 
@@ -44,19 +45,41 @@ namespace Swords
             Renderer = new Renderer(graphics, spriteBatch);
 
             ContentRegistry.Textures.Add("Grass", Content.Load<Texture2D>("Grass"));
+            ContentRegistry.Textures.Add("Grass2", Content.Load<Texture2D>("Grass2"));
+            ContentRegistry.Textures.Add("Grass3", Content.Load<Texture2D>("Grass3"));
+            ContentRegistry.Textures.Add("Grass4", Content.Load<Texture2D>("Grass4"));
+            ContentRegistry.Textures.Add("Grass5", Content.Load<Texture2D>("Grass5"));
+            ContentRegistry.Textures.Add("Grass6", Content.Load<Texture2D>("Grass6"));
+            ContentRegistry.Textures.Add("Grass7", Content.Load<Texture2D>("Grass7"));
+            ContentRegistry.Textures.Add("Grass8", Content.Load<Texture2D>("Grass8"));
+            ContentRegistry.Textures.Add("Grass9", Content.Load<Texture2D>("Grass9"));
+
+            ContentRegistry.Animations.Add(
+                "Grass-Animation",
+                new Animation(
+                    new Texture2D[]
+                    {
+                        ContentRegistry.Textures.Get("Grass"),
+                        ContentRegistry.Textures.Get("Grass2"),
+                        ContentRegistry.Textures.Get("Grass3"),
+                        ContentRegistry.Textures.Get("Grass4"),
+                        ContentRegistry.Textures.Get("Grass5"),
+                        ContentRegistry.Textures.Get("Grass6"),
+                        ContentRegistry.Textures.Get("Grass7"),
+                        ContentRegistry.Textures.Get("Grass8"),
+                        ContentRegistry.Textures.Get("Grass9")
+                    }, 10));
 
             EntityFactory.Register(
-                new Entity(new Location(0, 0), ContentRegistry.Textures.Get("Grass"), "Player")
+                new Entity(new Location(0, 0),
+                new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Player")
                     .AddBehavior(new PlayerMovement(3))
-                    .AddChild(new Entity(new Location(32, 32, 0), ContentRegistry.Textures.Get("Grass"), "Child")));
-
+                    .AddChild(new Entity(new Location(32, 32, 0), new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Child")));
 
 
             Level.Instance.SpawnEntity("Player", new Location(100, 100, 0));
 
-
             Entity entity = Level.Instance.SpawnEntity("Player", new Location(300, 100, 0));
-             Console.WriteLine( entity.RemoveChild("Child").Name);
         }
 
         protected override void UnloadContent()
