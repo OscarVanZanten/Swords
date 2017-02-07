@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Swords.Levels.Entities.Animations
+namespace Swords.Util.Animations
 {
     interface Playable
     {

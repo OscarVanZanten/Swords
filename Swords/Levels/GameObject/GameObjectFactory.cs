@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 
 using Swords.Util;
 using Swords.Content;
-using Swords.Levels.Entities.Behaviors;
+using Swords.Util.Behaviors;
 
-namespace Swords.Levels.Entities
+namespace Swords.Levels.GameObjects
 {
-    class EntityFactory
+    class GameObjectFactory
     {
-        private static Dictionary<string, Entity> entities = new Dictionary<string, Entity>();
+        private static Dictionary<string, GameObject> entities = new Dictionary<string, GameObject>();
 
-        public static void Register(Entity entity)
+        public static void Register(GameObject entity)
         {
             entities.Add(entity.Name, entity);
         }
 
-        public static Entity GetEntity(string name, Location loc)
+        public static GameObject GetEntity(string name, Location loc)
         {
-            Entity entity = null;
+            GameObject entity = null;
             entities.TryGetValue(name, out entity);
             if (entity != null)
             {
-                entity = (Entity)entity.Clone();
+                entity = (GameObject)entity.Clone();
                 entity.Location = loc;
             }
 

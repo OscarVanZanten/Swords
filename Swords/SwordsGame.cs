@@ -11,9 +11,9 @@ using Microsoft.Xna.Framework.Input;
 using Swords.Util;
 using Swords.Content;
 using Swords.Rendering;
-using Swords.Levels.Entities;
-using Swords.Levels.Entities.Animations;
-using Swords.Levels.Entities.Behaviors;
+using Swords.Levels.GameObjects;
+using Swords.Util.Animations;
+using Swords.Util.Behaviors;
 using Swords.Levels;
 
 namespace Swords
@@ -68,18 +68,18 @@ namespace Swords
                         ContentRegistry.Textures.Get("Grass7"),
                         ContentRegistry.Textures.Get("Grass8"),
                         ContentRegistry.Textures.Get("Grass9")
-                    }, 10));
+                    }, 15));
 
-            EntityFactory.Register(
-                new Entity(new Location(0, 0),
+            GameObjectFactory.Register(
+                new GameObject(new Location(0, 0),
                 new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Player")
                     .AddBehavior(new PlayerMovement(3))
-                    .AddChild(new Entity(new Location(32, 32, 0), new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Child")));
+                    .AddChild(new GameObject(new Location(32, 32, 0), new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Child")));
 
 
             Level.Instance.SpawnEntity("Player", new Location(100, 100, 0));
 
-            Entity entity = Level.Instance.SpawnEntity("Player", new Location(300, 100, 0));
+            GameObject entity = Level.Instance.SpawnEntity("Player", new Location(300, 100, 0));
         }
 
         protected override void UnloadContent()

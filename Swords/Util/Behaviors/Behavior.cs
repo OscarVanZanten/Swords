@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Swords.Levels.GameObjects;
 
-using Swords.Rendering;
-
-namespace Swords.Levels.Entities
+namespace Swords.Util.Behaviors
 {
-    interface IEntity
+    interface Behavior : ICloneable
     {
+        void Start(GameObject entity);
         void Update();
-
     }
 }

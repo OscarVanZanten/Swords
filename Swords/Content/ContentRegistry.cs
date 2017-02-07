@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 
 using Swords.Util;
-using Swords.Levels.Entities.Animations;
+using Swords.Util.Animations;
 
 namespace Swords.Content
 {

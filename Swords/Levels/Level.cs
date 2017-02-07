@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Swords.Levels.Entities;
+using Swords.Levels.GameObjects;
 using Swords.Util;
 using Swords.Rendering;
 
@@ -19,7 +19,7 @@ namespace Swords.Levels
         
         public Texture2D Background { get; set;}
 
-        private List<Entity> entities = new List<Entity>();
+        private List<GameObject> entities = new List<GameObject>();
 
         public void Init()
         {
@@ -28,21 +28,21 @@ namespace Swords.Levels
 
         public void Update()
         {
-            foreach (Entity entity in entities)
+            foreach (GameObject entity in entities)
             {
                 entity.Update();
             }
         }
 
-        public Entity SpawnEntity(string name, Location location)
+        public GameObject SpawnEntity(string name, Location location)
         {
-            Entity entity = EntityFactory.GetEntity(name, location);
+            GameObject entity = GameObjectFactory.GetEntity(name, location);
             entities.Add(entity);
             SwordsGame.Renderer.Register(entity);
             return entity;
         }
 
-        public void Remove(Entity entity)
+        public void Remove(GameObject entity)
         {
             entities.Remove(entity);
             SwordsGame.Renderer.Remove(entity);

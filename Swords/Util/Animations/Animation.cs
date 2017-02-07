@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Swords.Levels.Entities.Animations
+namespace Swords.Util.Animations
 {
     class Animation
     {

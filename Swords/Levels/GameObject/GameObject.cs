@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 
 using Swords.Rendering;
-using Swords.Levels.Entities.Animations;
-using Swords.Levels.Entities.Behaviors;
+using Swords.Util.Animations;
+using Swords.Util.Behaviors;
 using Swords.Util;
 
-namespace Swords.Levels.Entities
+namespace Swords.Levels.GameObjects
 {
-    class Entity : IEntity, Renderable, ICloneable
+    class GameObject : IGameObject, Renderable, ICloneable
     {
         public string Name { get { return name; } }
         public Location Location { get { return location; } set { location = value; } }
@@ -22,9 +22,9 @@ namespace Swords.Levels.Entities
         private Location location;
         private AnimationPlayer animations;
         private List<Behavior> behaviors;
-        private List<Entity> childeren;
+        private List<GameObject> childeren;
 
-        private Entity(Location location, AnimationPlayer animations, string name, List<Behavior> behaviors, List<Entity> childeren)
+        private GameObject(Location location, AnimationPlayer animations, string name, List<Behavior> behaviors, List<GameObject> childeren)
         {
             this.name = name;
             this.location = location;
@@ -38,9 +38,9 @@ namespace Swords.Levels.Entities
 
         }
 
-        public Entity(Location location, AnimationPlayer animations, string name) : this(location, animations, name, new List<Behavior>(), new List<Entity>()) { }
-        public Entity(Location location, string name) : this(location, null, name) { }
-        public Entity(Location location) : this(location, null, "Undefined") { }
+        public GameObject(Location location, AnimationPlayer animations, string name) : this(location, animations, name, new List<Behavior>(), new List<GameObject>()) { }
+        public GameObject(Location location, string name) : this(location, null, name) { }
+        public GameObject(Location location) : this(location, null, "Undefined") { }
 
         public ISprite[] GetSprites()
         {
@@ -51,7 +51,7 @@ namespace Swords.Levels.Entities
                 sprites.Add(new Sprite(location, animations.CurrentSprite, Position.Relative));
             }
 
-            foreach (Entity child in childeren)
+            foreach (GameObject child in childeren)
             {
                 foreach (Sprite sprite in child.GetSprites())
                 {
@@ -65,7 +65,7 @@ namespace Swords.Levels.Entities
         public void Update()
         {
             animations.Update();
-            foreach (Entity child in childeren)
+            foreach (GameObject child in childeren)
             {
                 child.Update();
             }
@@ -75,7 +75,7 @@ namespace Swords.Levels.Entities
             }
         }
 
-        public Entity AddBehavior(Behavior behavior)
+        public GameObject AddBehavior(Behavior behavior)
         {
             if (!HasBehavior(behavior.GetType()))
             {
@@ -113,16 +113,16 @@ namespace Swords.Levels.Entities
             return default(T);
         }
 
-        public Entity AddChild(Entity entity)
+        public GameObject AddChild(GameObject entity)
         {
             childeren.Add(entity);
             return this;
         }
 
-        public Entity RemoveChild(string Name)
+        public GameObject RemoveChild(string Name)
         {
-            Entity entity = null;
-            foreach (Entity child in childeren)
+            GameObject entity = null;
+            foreach (GameObject child in childeren)
             {
                 if (child.Name.Equals(Name))
                 {
@@ -141,19 +141,19 @@ namespace Swords.Levels.Entities
 
         public object Clone()
         {
-            List<Entity> childeren = new List<Entity>();
+            List<GameObject> childeren = new List<GameObject>();
             List<Behavior> behaviors = new List<Behavior>();
 
-            foreach (Entity child in this.childeren)
+            foreach (GameObject child in this.childeren)
             {
-                childeren.Add((Entity)child.Clone());
+                childeren.Add((GameObject)child.Clone());
             }
 
             foreach (Behavior behavior in this.behaviors)
             {
                 behaviors.Add((Behavior)behavior.Clone());
             }
-            Entity entity = new Entity(new Location(location.Vector.X, location.Vector.Y), animations, name, behaviors, childeren);
+            GameObject entity = new GameObject(new Location(location.Vector.X, location.Vector.Y), animations, name, behaviors, childeren);
 
             foreach (Behavior behavior in entity.behaviors)
             {

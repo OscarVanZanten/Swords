@@ -8,12 +8,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 using Swords.Util;
+using Swords.Levels.GameObjects;
 
-namespace Swords.Levels.Entities.Behaviors
+namespace Swords.Util.Behaviors
 {
     class PlayerMovement : Behavior
     {
-        private Entity entity;
+        private GameObject entity;
         private float speed;
 
         public PlayerMovement(float speed)
@@ -21,7 +22,7 @@ namespace Swords.Levels.Entities.Behaviors
             this.speed = speed;
         }
 
-        public void Start(Entity entity)
+        public void Start(GameObject entity)
         {
             this.entity = entity;
         }
