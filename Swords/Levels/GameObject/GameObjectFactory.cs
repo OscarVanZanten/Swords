@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Swords.Util;
 using Swords.Content;
-using Swords.Util.Behaviors;
+using Swords.Util.Component;
 
 namespace Swords.Levels.GameObjects
 {

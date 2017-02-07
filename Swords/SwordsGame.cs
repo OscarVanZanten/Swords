@@ -13,7 +13,7 @@ using Swords.Content;
 using Swords.Rendering;
 using Swords.Levels.GameObjects;
 using Swords.Util.Animations;
-using Swords.Util.Behaviors;
+using Swords.Util.Component;
 using Swords.Levels;
 
 namespace Swords
@@ -74,6 +74,7 @@ namespace Swords
                 new GameObject(new Location(0, 0),
                 new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Player")
                     .AddBehavior(new PlayerMovement(3))
+                    .AddBehavior(new RigidBody(10,0.05f, new Vector2(-3,3)))
                     .AddChild(new GameObject(new Location(32, 32, 0), new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Child")));
 
 

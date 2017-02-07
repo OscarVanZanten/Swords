@@ -10,9 +10,9 @@ using Microsoft.Xna.Framework.Input;
 using Swords.Util;
 using Swords.Levels.GameObjects;
 
-namespace Swords.Util.Behaviors
+namespace Swords.Util.Component
 {
-    class PlayerMovement : Behavior
+    class PlayerMovement : Component
     {
         private GameObject entity;
         private float speed;

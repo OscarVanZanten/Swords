@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Swords.Rendering;
 using Swords.Util.Animations;
-using Swords.Util.Behaviors;
+using Swords.Util.Component;
 using Swords.Util;
 
 namespace Swords.Levels.GameObjects
@@ -21,24 +21,24 @@ namespace Swords.Levels.GameObjects
         private string name;
         private Location location;
         private AnimationPlayer animations;
-        private List<Behavior> behaviors;
+        private List<Component> behaviors;
         private List<GameObject> childeren;
 
-        private GameObject(Location location, AnimationPlayer animations, string name, List<Behavior> behaviors, List<GameObject> childeren)
+        private GameObject(Location location, AnimationPlayer animations, string name, List<Component> behaviors, List<GameObject> childeren)
         {
             this.name = name;
             this.location = location;
             this.animations = animations;
             this.behaviors = behaviors;
             this.childeren = childeren;
-            foreach (Behavior behavior in behaviors)
+            foreach (Component behavior in behaviors)
             {
                 behavior.Start(this);
             }
 
         }
 
-        public GameObject(Location location, AnimationPlayer animations, string name) : this(location, animations, name, new List<Behavior>(), new List<GameObject>()) { }
+        public GameObject(Location location, AnimationPlayer animations, string name) : this(location, animations, name, new List<Component>(), new List<GameObject>()) { }
         public GameObject(Location location, string name) : this(location, null, name) { }
         public GameObject(Location location) : this(location, null, "Undefined") { }
 
@@ -69,13 +69,13 @@ namespace Swords.Levels.GameObjects
             {
                 child.Update();
             }
-            foreach (Behavior behavior in behaviors)
+            foreach (Component behavior in behaviors)
             {
                 behavior.Update();
             }
         }
 
-        public GameObject AddBehavior(Behavior behavior)
+        public GameObject AddBehavior(Component behavior)
         {
             if (!HasBehavior(behavior.GetType()))
             {
@@ -85,13 +85,13 @@ namespace Swords.Levels.GameObjects
             return this;
         }
 
-        public bool HasBehavior<T>() where T : Behavior
+        public bool HasBehavior<T>() where T : Component
         {
             return GetBehavior<T>() != null ? true : false;
         }
 
         private bool HasBehavior(Type type) {
-            foreach (Behavior b in behaviors)
+            foreach (Component b in behaviors)
             {
                 if (b.GetType() == type)
                 {
@@ -101,9 +101,9 @@ namespace Swords.Levels.GameObjects
             return false;
         }
 
-        public T GetBehavior<T>() where T : Behavior
+        public T GetBehavior<T>() where T : Component
         {
-            foreach (Behavior b in behaviors)
+            foreach (Component b in behaviors)
             {
                 if (b is T)
                 {
@@ -142,20 +142,20 @@ namespace Swords.Levels.GameObjects
         public object Clone()
         {
             List<GameObject> childeren = new List<GameObject>();
-            List<Behavior> behaviors = new List<Behavior>();
+            List<Component> behaviors = new List<Component>();
 
             foreach (GameObject child in this.childeren)
             {
                 childeren.Add((GameObject)child.Clone());
             }
 
-            foreach (Behavior behavior in this.behaviors)
+            foreach (Component behavior in this.behaviors)
             {
-                behaviors.Add((Behavior)behavior.Clone());
+                behaviors.Add((Component)behavior.Clone());
             }
             GameObject entity = new GameObject(new Location(location.Vector.X, location.Vector.Y), animations, name, behaviors, childeren);
 
-            foreach (Behavior behavior in entity.behaviors)
+            foreach (Component behavior in entity.behaviors)
             {
                 behavior.Start(entity);
             }

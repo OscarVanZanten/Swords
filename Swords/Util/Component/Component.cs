@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Swords.Levels.GameObjects;
 
-namespace Swords.Util.Behaviors
+namespace Swords.Util.Component
 {
-    interface Behavior : ICloneable
+    interface Component : ICloneable
     {
         void Start(GameObject entity);
         void Update();
