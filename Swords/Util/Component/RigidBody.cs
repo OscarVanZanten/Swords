@@ -16,16 +16,21 @@ namespace Swords.Util.Component
 
         private float mass;
         private float drag;
+        private float rotationalDrag;
+        
+        private float rotationVelocity;
         private Vector2 velocity;
 
-        public RigidBody(float mass, float drag, Vector2 velocity)
+        public RigidBody(float mass, float drag, float rotationalDrag, Vector2 velocity, float rotationVelocity)
         {
             this.mass = mass;
             this.drag = drag;
+            this.rotationalDrag = rotationalDrag;
             this.velocity = velocity;
+            this.rotationVelocity = rotationVelocity;
         }
 
-        public RigidBody(float mass, float drag) : this(mass, drag, new Vector2()) { }
+        public RigidBody(float mass, float drag, float rotationDrag) : this(mass, drag,rotationDrag, new Vector2(), 0) { }
 
 
         public void Start(GameObject entity)
@@ -36,6 +41,11 @@ namespace Swords.Util.Component
         public void Update()
         {
             entity.Location.Add(velocity);
+            entity.Location.IncRotation(rotationVelocity);
+
+            rotationVelocity = rotationVelocity < 0 ?
+                (Math.Abs(rotationVelocity) < rotationalDrag) ? 0 : rotationVelocity + rotationalDrag :
+                (Math.Abs(rotationVelocity) < rotationalDrag) ? 0 : rotationVelocity - rotationalDrag;
 
             float length = velocity.Length();
 
@@ -45,7 +55,7 @@ namespace Swords.Util.Component
 
         public object Clone()
         {
-            return new RigidBody(mass, drag, new Vector2(velocity.X, velocity.Y));
+            return new RigidBody(mass, drag, rotationalDrag, new Vector2(velocity.X, velocity.Y), rotationVelocity);
         }
 
     }

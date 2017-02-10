@@ -63,7 +63,6 @@
     <Compile Include="Util\Location.cs" />
     <Compile Include="Util\Registry.cs" />
     <Compile Include="Util\RegistryEntry.cs" />
-    <Compile Include="Util\Shapes\Shape.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
