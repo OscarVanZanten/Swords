@@ -14,6 +14,7 @@ using Swords.Rendering;
 using Swords.Levels.GameObjects;
 using Swords.Util.Animations;
 using Swords.Util.Component;
+using Swords.Util.Shapes;
 using Swords.Levels;
 
 namespace Swords
@@ -30,6 +31,13 @@ namespace Swords
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            Circle cirlce = new Circle(new Location(1, 0.75f), 1);
+            Line line = new Line(new Vector2(0, 0), new Vector2(2, 0));
+
+            Console.WriteLine(cirlce.Intersects(line));
+
+
         }
 
         protected override void Initialize()
@@ -78,8 +86,6 @@ namespace Swords
 
 
             Level.Instance.SpawnEntity("Player", new Location(100, 100, 0));
-
-            GameObject entity = Level.Instance.SpawnEntity("Player", new Location(300, 100, 0));
         }
 
         protected override void UnloadContent()

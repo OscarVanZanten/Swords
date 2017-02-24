@@ -45,6 +45,7 @@
     <Compile Include="Util\Animations\Animation.cs" />
     <Compile Include="Util\Animations\AnimationPlayer.cs" />
     <Compile Include="Util\Animations\Playable.cs" />
+    <Compile Include="Util\Component\Collider.cs" />
     <Compile Include="Util\Component\Component.cs" />
     <Compile Include="Util\Component\PlayerMovement.cs" />
     <Compile Include="Levels\GameObject\GameObject.cs" />
@@ -63,6 +64,10 @@
     <Compile Include="Util\Location.cs" />
     <Compile Include="Util\Registry.cs" />
     <Compile Include="Util\RegistryEntry.cs" />
+    <Compile Include="Util\Shapes\Circle.cs" />
+    <Compile Include="Util\Shapes\Line.cs" />
+    <Compile Include="Util\Shapes\Rectangle.cs" />
+    <Compile Include="Util\Shapes\Shape.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">

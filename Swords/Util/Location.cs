@@ -51,6 +51,7 @@ namespace Swords.Util
                 rotation = d;
             }
         }
+      
 
         public static Location Add(Location l1, Location l2)
         {
