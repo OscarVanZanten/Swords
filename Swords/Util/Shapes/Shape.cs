@@ -10,6 +10,12 @@ namespace Swords.Util.Shapes
 {
     interface Shape
     {
+        Vector2[] Vertices { get; set; }
+        Line[] Edges { get; set; }
+
+        Vector2[] AbsoluteVertices { get;  }
+        Line[] AbsoluteEdges { get;  }
+
         Location Location { get; set; }
         bool Contains(Vector2 p);
         bool Contains(Line l);
