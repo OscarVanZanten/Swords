@@ -9,65 +9,44 @@ namespace Swords.Util.Shapes
 {
     class Rectangle : Shape
     {
-        public Vector2[] AbsoluteVertices
-        {
-            get
-            {
-                if (Vertices == null) { return null; }
-                Vector2[] verts = new Vector2[Vertices.Length];
-                for (int i = 0; i < Vertices.Length; i++)
-                {
-                    verts[i] = Vertices[i] + Location.Vector;
-                }
-                return verts;
-            }
-        }
-
-        public Line[] AbsoluteEdges
-        {
-            get
-            {
-                if (Edges == null) { return null; }
-                Line[] edges = new Line[Edges.Length];
-                for (int i = 0; i < Edges.Length; i++)
-                {
-                    edges[i] = new Line(Edges[i].P1 + Location.Vector, Edges[i].P2 + Location.Vector);
-                }
-                return edges;
-            }
-        }
-
-        public Vector2[] Vertices { get; set; }
-        public Line[] Edges { get; set; }
-
-        public Location Location { get; set; }
-
-        public Rectangle(Location location, int width, int height)
+        private float width;
+        private float height;
+        
+        public Rectangle(Location location, float width, float height)
         {
             this.Location = location;
             this.Vertices = new Vector2[4];
             this.Edges = new Line[4];
+
+            this.Vertices[0] = new Vector2(-(width / 2), -(height / 2));
+            this.Vertices[1] = new Vector2((width / 2), -(height / 2));
+            this.Vertices[2] = new Vector2((width / 2), (height / 2));
+            this.Vertices[3] = new Vector2(-(width / 2), (height / 2));
+
+            for (int i = 0; i < Vertices.Length; i++)
+            {
+                Edges[i] = new Line(Vertices[i], (i + 1 == Vertices.Length) ? Vertices[0] : Vertices[i + 1]);
+            }
         }
 
-
-        public bool Contains(Line l)
+        public override bool Contains(Vector2 p)
         {
-            throw new NotImplementedException();
+            Vector2 target = p - Location.Vector ;
+            target = Location.Rotate(target, -Location.Rotation);
+
+
+
+
+            return false;
         }
 
-        public bool Contains(Vector2 p)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Intersects(Shape p)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Intersects(Line l)
-        {
-            throw new NotImplementedException();
+        public override String ToString() {
+            String message = "Rectangle: \n";
+            for (int i = 0; i < Vertices.Length; i++)
+            {
+                message += "P" + i + " " + AbsoluteVertices[i] + "\n";
+            }
+            return message;
         }
     }
 }

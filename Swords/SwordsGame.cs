@@ -34,8 +34,17 @@ namespace Swords
 
             Circle cirlce = new Circle(new Location(1, 0.75f), 1);
             Line line = new Line(new Vector2(0, 0), new Vector2(2, 0));
-
             Console.WriteLine(cirlce.Intersects(line));
+
+            Util.Shapes.Rectangle rect = new Util.Shapes.Rectangle( new Location( 0,0,0), 5,3);
+
+
+
+            Console.WriteLine(rect);
+            rect.Location.SetRotation((float)(Math.PI/2));
+            Console.WriteLine(rect);
+            rect.Contains(new Vector2(-1, -1));
+
 
 
         }

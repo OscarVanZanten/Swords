@@ -62,5 +62,22 @@ namespace Swords.Util
 
             return new Location(l1.vector + vec, l1.rotation + l2.rotation);
         }
+
+        public static Location Add(Location l1, Vector2 l2)
+        {
+            double x = l2.X * Math.Cos(l1.rotation) - l2.Y * Math.Sin(l1.rotation);
+            double y = l2.X * Math.Sin(l1.rotation) + l2.Y * Math.Cos(l1.rotation);
+
+            Vector2 vec = new Vector2((float)x, (float)y);
+
+            return new Location(l1.vector + vec, l1.rotation);
+        }
+
+        public static Vector2 Rotate(Vector2 vec, float angle)
+        {
+            double x = vec.X * Math.Cos(angle) - vec.Y * Math.Sin(angle);
+            double y = vec.X * Math.Sin(angle) + vec.Y * Math.Cos(angle);
+            return new Vector2((float)x, (float)y);
+        }
     }
 }

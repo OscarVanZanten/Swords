@@ -10,39 +10,6 @@ namespace Swords.Util.Shapes
 {
     class Circle : Shape
     {
-        public Vector2[] Vertices { get; set; }
-        public Line[] Edges { get; set; }
-
-        public Vector2[] AbsoluteVertices
-        {
-            get
-            {
-                if (Vertices == null) { return null; }
-                Vector2[] verts = new Vector2[Vertices.Length];
-                for (int i = 0; i < Vertices.Length; i++)
-                {
-                    verts[i] = Vertices[i] + Location.Vector;
-                }
-                return verts;
-            }
-        }
-
-        public Line[] AbsoluteEdges
-        {
-            get
-            {
-                if (Edges == null) { return null; }
-                Line[] edges = new Line[Edges.Length];
-                for (int i = 0; i < Edges.Length; i++)
-                {
-                    edges[i] = new Line(Edges[i].P1 + Location.Vector, Edges[i].P2 + Location.Vector);
-                }
-                return edges;
-            }
-        }
-
-        public Location Location { get; set; }
-
         private float radius;
         private static int BaseVerticesCount = 6;
         private static float BaseSize = 1;
@@ -76,13 +43,7 @@ namespace Swords.Util.Shapes
 
         public Circle(Location location, float radius) : this(location, radius, (int)(BaseVerticesCount + (radius - BaseSize) / VerticesIncrease)) { }
 
-        public bool Contains(Line l)
-        {
-            if (Contains(l.P1) && Contains(l.P2)) { return true; }
-            return false;
-        }
-
-        public bool Contains(Vector2 p)
+        public override bool Contains(Vector2 p)
         {
             if (Distance(p, Location.Vector) > radius)
             {
@@ -91,7 +52,7 @@ namespace Swords.Util.Shapes
             return true;
         }
 
-        public bool Intersects(Line l)
+        public override bool Intersects(Line l)
         {
             if (Contains(l.P1) || Contains(l.P2)) { return true; }
 
@@ -126,24 +87,6 @@ namespace Swords.Util.Shapes
         private double RadiansToDegrees(double radians)
         {
             return radians * 180 / Math.PI;
-        }
-
-
-        public bool Intersects(Shape p)
-        {
-            Vector2[] vertices = AbsoluteVertices;
-            Line[] edges = AbsoluteEdges;
-            foreach (Vector2 vertex in vertices)
-            {
-                if (p.Contains(vertex)) { return true; }
-            }
-
-            foreach (Line edge in edges)
-            {
-                if (p.Intersects(edge)) { return true; }
-            }
-
-            return false;
         }
 
         private double Distance(Vector2 p1, Vector2 p2)
