@@ -34,18 +34,10 @@ namespace Swords
 
             Circle cirlce = new Circle(new Location(1, 0.75f), 1);
             Line line = new Line(new Vector2(0, 0), new Vector2(2, 0));
-            Console.WriteLine(cirlce.Intersects(line));
 
-            Util.Shapes.Rectangle rect = new Util.Shapes.Rectangle( new Location( 0,0,0), 5,3);
+            Triangle t = new Triangle(new Location(0, 0, 0), new Vector2(1, 1), new Vector2(-1, 1), new Vector2(0, -1));
 
-
-
-            Console.WriteLine(rect);
-            rect.Location.SetRotation((float)(Math.PI/2));
-            Console.WriteLine(rect);
-            rect.Contains(new Vector2(-1, -1));
-
-
+            Console.WriteLine(t.Contains(new Vector2(1, 0)));
 
         }
 
@@ -91,7 +83,7 @@ namespace Swords
                 new GameObject(new Location(0, 0),
                 new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Player")
                     .AddBehavior(new PlayerMovement(3))
-                    .AddBehavior(new RigidBody(10,0.05f, 0.001f , new Vector2(2.5f,2.5f), 0.1f)));
+                    .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(2.5f, 2.5f), 0.1f)));
 
 
             Level.Instance.SpawnEntity("Player", new Location(100, 100, 0));

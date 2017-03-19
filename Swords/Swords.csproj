@@ -66,6 +66,7 @@
     <Compile Include="Util\RegistryEntry.cs" />
     <Compile Include="Util\Shapes\Circle.cs" />
     <Compile Include="Util\Shapes\Line.cs" />
+    <Compile Include="Util\Shapes\Polygon.cs" />
     <Compile Include="Util\Shapes\Rectangle.cs" />
     <Compile Include="Util\Shapes\Shape.cs" />
     <Compile Include="Util\Shapes\Triangle.cs" />
