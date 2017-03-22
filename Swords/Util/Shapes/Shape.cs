@@ -10,12 +10,12 @@ namespace Swords.Util.Shapes
 {
     abstract class Shape
     {
-        public Vector2[] Vertices { get; set; }
         public Line[] Edges { get; set; }
-
+        public Vector2[] Vertices { get; set; }
         public Location Location { get; set; }
+        public BoundingBox BroadBoundingBox { get; set; }
 
-        public Vector2[] AbsoluteVertices
+        public virtual Vector2[] AbsoluteVertices
         {
             get
             {
@@ -29,7 +29,7 @@ namespace Swords.Util.Shapes
             }
         }
 
-        public Line[] AbsoluteEdges
+        public virtual Line[] AbsoluteEdges
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Swords.Util.Shapes
             return false;
         }
 
-        public bool Intersects(Shape p)
+        public virtual bool Intersects(Shape p)
         {
             Vector2[] vertices = AbsoluteVertices;
             Line[] edges = AbsoluteEdges;
@@ -78,6 +78,19 @@ namespace Swords.Util.Shapes
             }
 
             return false;
+        }
+
+        protected void UpdateBroadBoundingBox()
+        {
+            float distance = 0;
+
+            foreach (Vector2 vec in Vertices)
+            {
+                float newDist = vec.Length();
+               if(newDist > distance) { distance = newDist; } 
+            }
+            this.BroadBoundingBox = new BoundingBox(Location, distance, distance);
+
         }
     }
 }

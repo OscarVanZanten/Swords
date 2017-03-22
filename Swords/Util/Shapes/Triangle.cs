@@ -23,6 +23,8 @@ namespace Swords.Util.Shapes
             {
                 Edges[i] = new Line(Vertices[i], (i + 1 == Vertices.Length) ? Vertices[0] : Vertices[i + 1]);
             }
+
+            this.UpdateBroadBoundingBox();
         }
 
         public override bool Contains(Vector2 p)

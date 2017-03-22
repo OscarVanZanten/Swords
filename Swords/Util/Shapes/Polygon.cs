@@ -17,6 +17,7 @@ namespace Swords.Util.Shapes
             this.Edges = outline;
             this.triangles = triangles;
 
+            this.UpdateBroadBoundingBox();
         }
 
         public override bool Contains(Vector2 p)

@@ -37,8 +37,7 @@ namespace Swords.Util.Shapes
 
             this.Location = location;
             this.radius = radius;
-
-            //Console.WriteLine("Vertex: " + Vertices.Length + " Edge: " + Edges.Length);
+            this.UpdateBroadBoundingBox();
         }
 
         public Circle(Location location, float radius) : this(location, radius, (int)(BaseVerticesCount + (radius - BaseSize) / VerticesIncrease)) { }

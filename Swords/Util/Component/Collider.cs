@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Swords.Util.Shapes;
 
 using Swords.Levels.GameObjects;
 
@@ -11,23 +12,24 @@ namespace Swords.Util.Component
 {
     class Collider : Component
     {
+        public Shape Hitbox { get; set; }
+        private GameObject entity;
 
-        public Collider()
+        public Collider(Shape hitbox)
         {
-
+            this.Hitbox = hitbox;
         }
-        
 
         public delegate void Collision(GameObject entity);
 
         public object Clone()
         {
-            throw new NotImplementedException();
+            return new Collider(Hitbox);
         }
 
         public void Start(GameObject entity)
         {
-            throw new NotImplementedException();
+            this.entity = entity;
         }
 
         public void Update()

@@ -14,7 +14,6 @@ using Swords.Rendering;
 using Swords.Levels.GameObjects;
 using Swords.Util.Animations;
 using Swords.Util.Component;
-using Swords.Util.Shapes;
 using Swords.Levels;
 
 namespace Swords
@@ -31,21 +30,12 @@ namespace Swords
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            Circle cirlce = new Circle(new Location(1, 0.75f), 1);
-            Line line = new Line(new Vector2(0, 0), new Vector2(2, 0));
-
-            Triangle t = new Triangle(new Location(0, 0, 0), new Vector2(1, 1), new Vector2(-1, 1), new Vector2(0, -1));
-
-            Console.WriteLine(t.Contains(new Vector2(1, 0)));
-
         }
 
         protected override void Initialize()
         {
             base.Initialize();
             Level.Instance.Init();
-
         }
 
         protected override void LoadContent()
@@ -100,7 +90,7 @@ namespace Swords
                 Exit();
 
             Level.Instance.Update();
-
+            
             base.Update(gameTime);
         }
 

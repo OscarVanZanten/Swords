@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Swords.Levels.GameObjects;
+using Swords.Util.Component;
 using Swords.Util;
 using Swords.Rendering;
+using Swords.Levels.Physics;
 
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,6 +22,8 @@ namespace Swords.Levels
         public Texture2D Background { get; set;}
 
         private List<GameObject> entities = new List<GameObject>();
+        
+
 
         public void Init()
         {
@@ -32,12 +36,14 @@ namespace Swords.Levels
             {
                 entity.Update();
             }
+            CollisionManager.Instance.Update();
         }
 
         public GameObject SpawnEntity(string name, Location location)
         {
             GameObject entity = GameObjectFactory.GetEntity(name, location);
             entities.Add(entity);
+            CollisionManager.Instance.Add(entity);
             SwordsGame.Renderer.Register(entity);
             return entity;
         }
@@ -45,6 +51,7 @@ namespace Swords.Levels
         public void Remove(GameObject entity)
         {
             entities.Remove(entity);
+            CollisionManager.Instance.Remove(entity);
             SwordsGame.Renderer.Remove(entity);
         }
 

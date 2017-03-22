@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Content\ContentRegistry.cs" />
+    <Compile Include="Levels\Physics\CollisionManager.cs" />
     <Compile Include="Util\Animations\Animation.cs" />
     <Compile Include="Util\Animations\AnimationPlayer.cs" />
     <Compile Include="Util\Animations\Playable.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Util\Location.cs" />
     <Compile Include="Util\Registry.cs" />
     <Compile Include="Util\RegistryEntry.cs" />
+    <Compile Include="Util\Shapes\BoundingBox.cs" />
     <Compile Include="Util\Shapes\Circle.cs" />
     <Compile Include="Util\Shapes\Line.cs" />
     <Compile Include="Util\Shapes\Polygon.cs" />
