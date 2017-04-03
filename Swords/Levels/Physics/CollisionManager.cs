@@ -68,7 +68,6 @@ namespace Swords.Levels.Physics
                     if (poss.Entry1.Rigidbody != null)
                     {
                         Vector2 force =  poss.Entry1.Rigidbody.Velocity * poss.Entry1.Rigidbody.Mass;
-                        Console.WriteLine(force);
                         poss.Entry2.Rigidbody.AddVelocity(force / poss.Entry1.Rigidbody.Mass);
                         
 

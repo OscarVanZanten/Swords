@@ -60,6 +60,11 @@ namespace Swords.Util.Component
             velocity += vec;
         }
 
+        public void SetVelocity(Vector2 vec)
+        {
+            velocity = vec;
+        }
+
         public object Clone()
         {
             return new RigidBody(mass, drag, rotationalDrag, new Vector2(velocity.X, velocity.Y), rotationVelocity);

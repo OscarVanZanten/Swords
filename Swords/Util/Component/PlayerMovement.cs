@@ -15,6 +15,7 @@ namespace Swords.Util.Component
     class PlayerMovement : Component
     {
         private GameObject entity;
+        private RigidBody rigidbody;
         private float speed;
 
         public PlayerMovement(float speed)
@@ -25,6 +26,7 @@ namespace Swords.Util.Component
         public void Start(GameObject entity)
         {
             this.entity = entity;
+            this.rigidbody = entity.GetBehavior<RigidBody>();
         }
 
         public void Update()
@@ -40,11 +42,17 @@ namespace Swords.Util.Component
             else
             {
                 Vector2 vec = new Vector2(
-                     (Keyboard.GetState().IsKeyDown(Keys.D) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.A) ? -1 : 0)
-                    , (Keyboard.GetState().IsKeyDown(Keys.S) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.W) ? -1 : 0)
-                    );
+                        (Keyboard.GetState().IsKeyDown(Keys.D) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.A) ? -1 : 0),
+                        (Keyboard.GetState().IsKeyDown(Keys.S) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.W) ? -1 : 0));
 
-                entity.GetBehavior<RigidBody>().AddVelocity(vec);
+                if (this.rigidbody.Velocity.Length() >= speed)
+                {
+                    this.rigidbody.SetVelocity(vec);
+                }
+                else
+                {
+                    this.rigidbody.AddVelocity(vec);
+                }
             }
         }
 
