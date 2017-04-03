@@ -64,6 +64,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Component\RigidBody.cs" />
+    <Compile Include="Util\Listeneners\CollisionListener.cs" />
     <Compile Include="Util\Location.cs" />
     <Compile Include="Util\Registry.cs" />
     <Compile Include="Util\RegistryEntry.cs" />

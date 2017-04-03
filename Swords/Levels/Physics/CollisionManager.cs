@@ -65,11 +65,14 @@ namespace Swords.Levels.Physics
                 if (poss.Entry1.Collider.Hitbox.Intersects(poss.Entry2.Collider.Hitbox))
                 {
                     poss.Entry1.Collider.Collide();
+                    if (poss.Entry1.Rigidbody != null)
+                    {
+                        Vector2 force =  poss.Entry1.Rigidbody.Velocity * poss.Entry1.Rigidbody.Mass;
+                        Console.WriteLine(force);
+                        poss.Entry2.Rigidbody.AddVelocity(force / poss.Entry1.Rigidbody.Mass);
+                        
 
-                    Vector2 diff = poss.Entry1.Entity.Location.Vector-poss.Entry2.Entity.Location.Vector;
-                    diff.Normalize();
-                    diff = diff / 10;
-                    poss.Entry1.Rigidbody.AddVelocity(diff);
+                    }
                 }
             }
         }

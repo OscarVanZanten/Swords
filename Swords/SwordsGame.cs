@@ -70,23 +70,10 @@ namespace Swords
                         ContentRegistry.Textures.Get("Grass9")
                     }, 15));
 
-
-            GameObjectFactory.Register(
-                new GameObject(new Location(0, 0),
-                new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Player")
-                    .AddBehavior(new PlayerMovement(1))
-                    .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
-                    .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(), 0.0f)));
-
-            GameObjectFactory.Register(
-                new GameObject(new Location(0, 0),
-                    new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Object")
-                    .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
-                    .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(), 0.0f)));
-
-
-            Level.Instance.SpawnEntity("Player", new Location(100, 100, 0));
+            Level.Instance.SpawnEntity("Player", new Location(50, 100, 0));
+            Level.Instance.SpawnEntity("Object", new Location(150, 100, 0));
             Level.Instance.SpawnEntity("Object", new Location(200, 100, 0));
+             Level.Instance.SpawnEntity("Object", new Location(250, 100, 0));
         }
 
         protected override void UnloadContent()

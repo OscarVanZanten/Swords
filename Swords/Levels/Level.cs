@@ -22,9 +22,6 @@ namespace Swords.Levels
         public Texture2D Background { get; set;}
 
         private List<GameObject> entities = new List<GameObject>();
-        
-
-
         public void Init()
         {
             SwordsGame.Renderer.Register(this);

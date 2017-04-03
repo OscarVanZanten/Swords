@@ -17,9 +17,12 @@ namespace Swords.Util.Component
         private float mass;
         private float drag;
         private float rotationalDrag;
-        
+
         private float rotationVelocity;
         private Vector2 velocity;
+
+        public float Mass { get { return mass; } }
+        public Vector2 Velocity { get { return velocity; } }
 
         public RigidBody(float mass, float drag, float rotationalDrag, Vector2 velocity, float rotationVelocity)
         {

@@ -44,7 +44,7 @@ namespace Swords.Util.Component
                     , (Keyboard.GetState().IsKeyDown(Keys.S) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.W) ? -1 : 0)
                     );
 
-                entity.Location.Add(vec * speed);
+                entity.GetBehavior<RigidBody>().AddVelocity(vec);
             }
         }
 
