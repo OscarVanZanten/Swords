@@ -87,7 +87,9 @@ namespace Swords.Levels.GameObjects
 
         public bool HasBehavior<T>() where T : Component
         {
-            return GetBehavior<T>() != null ? true : false;
+
+            Console.WriteLine(GetBehavior<T>() == null);
+            return GetBehavior<T>() != null;
         }
 
         private bool HasBehavior(Type type) {

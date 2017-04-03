@@ -32,7 +32,6 @@ namespace Swords.Util.Component
 
         public RigidBody(float mass, float drag, float rotationDrag) : this(mass, drag,rotationDrag, new Vector2(), 0) { }
 
-
         public void Start(GameObject entity)
         {
             this.entity = entity;
@@ -51,6 +50,11 @@ namespace Swords.Util.Component
 
             velocity.X = (length - drag > 0) ? velocity.X / length * (length - drag) : 0;
             velocity.Y = (length - drag > 0) ? velocity.Y / length * (length - drag) : 0;
+        }
+
+        public void AddVelocity(Vector2 vec)
+        {
+            velocity += vec;
         }
 
         public object Clone()

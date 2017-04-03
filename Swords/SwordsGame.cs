@@ -75,8 +75,14 @@ namespace Swords
                     .AddBehavior(new PlayerMovement(3))
                     .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(2.5f, 2.5f), 0.1f)));
 
+            GameObjectFactory.Register(
+                new GameObject(new Location(0,0),
+                   new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Object")
+                    .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(), 0.1f)));
+
 
             Level.Instance.SpawnEntity("Player", new Location(100, 100, 0));
+            Level.Instance.SpawnEntity("Object", new Location(200, 100, 0));
         }
 
         protected override void UnloadContent()
