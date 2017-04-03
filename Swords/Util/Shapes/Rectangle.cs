@@ -11,7 +11,9 @@ namespace Swords.Util.Shapes
     {
         private float width;
         private float height;
-
+        public float Width { get { return width; } }
+        public float Height { get { return height; } }
+        public Rectangle(float width, float height) : this(new Location(0, 0), width, height) { }
         public Rectangle(Location location, float width, float height)
         {
             this.Location = location;
@@ -42,8 +44,8 @@ namespace Swords.Util.Shapes
             float width = this.width / 2;
             float height = this.height / 2;
 
-            bool containsX = target.X < width && target.X > -width;
-            bool containsY = target.Y < height && target.Y > -height;
+            bool containsX = target.X <= width && target.X >= -width;
+            bool containsY = target.Y <= height && target.Y >= -height;
 
             return (containsX && containsY);
         }

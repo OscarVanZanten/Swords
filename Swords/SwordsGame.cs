@@ -14,6 +14,7 @@ using Swords.Rendering;
 using Swords.Levels.GameObjects;
 using Swords.Util.Animations;
 using Swords.Util.Component;
+using Swords.Util.Shapes;
 using Swords.Levels;
 
 namespace Swords
@@ -41,7 +42,7 @@ namespace Swords
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Renderer = new Renderer(graphics, spriteBatch);
+            Renderer = new Renderer(graphics, spriteBatch, GraphicsDevice);
 
             ContentRegistry.Textures.Add("Grass", Content.Load<Texture2D>("Grass"));
             ContentRegistry.Textures.Add("Grass2", Content.Load<Texture2D>("Grass2"));
@@ -69,16 +70,19 @@ namespace Swords
                         ContentRegistry.Textures.Get("Grass9")
                     }, 15));
 
+
             GameObjectFactory.Register(
                 new GameObject(new Location(0, 0),
                 new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Player")
-                    .AddBehavior(new PlayerMovement(3))
-                    .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(2.5f, 2.5f), 0.1f)));
+                    .AddBehavior(new PlayerMovement(1))
+                    .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
+                    .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(), 0.0f)));
 
             GameObjectFactory.Register(
-                new GameObject(new Location(0,0),
-                   new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Object")
-                    .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(), 0.1f)));
+                new GameObject(new Location(0, 0),
+                    new AnimationPlayer(new List<Animation>() { ContentRegistry.Animations.Get("Grass-Animation") }), "Object")
+                    .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
+                    .AddBehavior(new RigidBody(10, 0.05f, 0.001f, new Vector2(), 0.0f)));
 
 
             Level.Instance.SpawnEntity("Player", new Location(100, 100, 0));
@@ -96,7 +100,7 @@ namespace Swords
                 Exit();
 
             Level.Instance.Update();
-            
+
             base.Update(gameTime);
         }
 

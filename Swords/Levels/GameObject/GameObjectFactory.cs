@@ -26,9 +26,9 @@ namespace Swords.Levels.GameObjects
             if (entity != null)
             {
                 entity = (GameObject)entity.Clone();
-                entity.Location = loc;
+                entity.Location.Vector = loc.Vector;
+                entity.Location.SetRotation(loc.Rotation);
             }
-
             return entity;
         }
 

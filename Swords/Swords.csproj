@@ -42,7 +42,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Content\ContentRegistry.cs" />
+    <Compile Include="Levels\Physics\ColliderEntry.cs" />
     <Compile Include="Levels\Physics\CollisionManager.cs" />
+    <Compile Include="Levels\Physics\CollisionPossibility.cs" />
     <Compile Include="Util\Animations\Animation.cs" />
     <Compile Include="Util\Animations\AnimationPlayer.cs" />
     <Compile Include="Util\Animations\Playable.cs" />

@@ -17,49 +17,59 @@ namespace Swords.Levels.Physics
         private static CollisionManager instance;
         public static CollisionManager Instance { get { if (instance == null) { instance = new CollisionManager(); } return instance; } }
 
-        private Dictionary<GameObject, KeyValuePair<Collider, RigidBody>> colliders = new Dictionary<GameObject, KeyValuePair<Collider, RigidBody>>();
+        private List<ColliderEntry> colliders = new List<ColliderEntry>();
 
         public void Add(GameObject entity)
         {
             if (entity.HasBehavior<Collider>())
             {
-            Console.WriteLine(entity.Name);
-                colliders.Add(entity, new KeyValuePair<Collider, RigidBody>(entity.GetBehavior<Collider>(), entity.GetBehavior<RigidBody>()));
+                colliders.Add(new ColliderEntry(entity, entity.GetBehavior<Collider>(), entity.GetBehavior<RigidBody>()));
             }
         }
 
         public void Remove(GameObject entity)
         {
-            if (colliders.ContainsKey(entity))
+            foreach (ColliderEntry entry in colliders)
             {
-                colliders.Remove(entity);
+                if (entry.Entity.Equals(entity))
+                {
+                    colliders.Remove(entry);
+                    return;
+                }
             }
         }
 
         public void Update()
         {
-           Console.WriteLine(colliders.Count);
-            Dictionary<KeyValuePair<GameObject, KeyValuePair<Collider, RigidBody>>,
-                       KeyValuePair<GameObject, KeyValuePair<Collider, RigidBody>>> possibilities = new Dictionary<KeyValuePair<GameObject, KeyValuePair<Collider, RigidBody>>, KeyValuePair<GameObject, KeyValuePair<Collider, RigidBody>>>();
-            //broad pass
-            foreach (KeyValuePair<GameObject, KeyValuePair<Collider, RigidBody>> collider1 in colliders)
+            List<CollisionPossibility> possibilties = new List<CollisionPossibility>();
+            //update boundingboxes
+            foreach (ColliderEntry collider in colliders)
             {
-                foreach (KeyValuePair<GameObject, KeyValuePair<Collider, RigidBody>> collider2 in colliders)
+                collider.Collider.Hitbox.UpdateBroadBoundingBox();
+            }
+            //broad pass
+            foreach (ColliderEntry collider1 in colliders)
+            {
+                foreach (ColliderEntry collider2 in colliders)
                 {
-                    bool hit = collider1.Value.Key.Hitbox.BroadBoundingBox.Intersects(collider2.Value.Key.Hitbox.BroadBoundingBox);
-                    Console.WriteLine(hit);
-                    if (hit)
+                    if (collider1 == collider2) { continue; }
+                    if (collider1.Collider.Hitbox.BroadBoundingBox.Intersects(collider2.Collider.Hitbox.BroadBoundingBox))
                     {
-                        possibilities.Add(collider1, collider2);
+                        possibilties.Add(new CollisionPossibility(collider1, collider2));
                     }
                 }
             }
             //narrow pass
-            foreach (KeyValuePair<KeyValuePair<GameObject, KeyValuePair<Collider, RigidBody>>, KeyValuePair<GameObject, KeyValuePair<Collider, RigidBody>>> poss in possibilities)
+            foreach (CollisionPossibility poss in possibilties)
             {
-                if (poss.Key.Value.Key.Hitbox.Intersects(poss.Value.Value.Key.Hitbox))
+                if (poss.Entry1.Collider.Hitbox.Intersects(poss.Entry2.Collider.Hitbox))
                 {
-                    poss.Key.Value.Value.AddVelocity(new Vector2(0, 10));
+                    poss.Entry1.Collider.Collide();
+
+                    Vector2 diff = poss.Entry1.Entity.Location.Vector-poss.Entry2.Entity.Location.Vector;
+                    diff.Normalize();
+                    diff = diff / 10;
+                    poss.Entry1.Rigidbody.AddVelocity(diff);
                 }
             }
         }

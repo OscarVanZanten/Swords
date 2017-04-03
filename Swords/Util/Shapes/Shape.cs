@@ -65,30 +65,29 @@ namespace Swords.Util.Shapes
 
         public virtual bool Intersects(Shape p)
         {
-            Vector2[] vertices = AbsoluteVertices;
-            Line[] edges = AbsoluteEdges;
-            foreach (Vector2 vertex in vertices)
+            foreach (Vector2 vertex in p.AbsoluteVertices)
             {
-                if (p.Contains(vertex)) { return true; }
+                if (Contains(vertex)) { return true; }
             }
 
-            foreach (Line edge in edges)
-            {
-                if (p.Intersects(edge)) { return true; }
-            }
-
+           // foreach (Line edge in p.AbsoluteEdges)
+           // {
+           //    // if (Intersects(edge)) { return true; }
+           // }
+           //// Console.WriteLine
             return false;
         }
 
-        protected void UpdateBroadBoundingBox()
+        public void UpdateBroadBoundingBox()
         {
             float distance = 0;
 
             foreach (Vector2 vec in Vertices)
             {
                 float newDist = vec.Length();
-               if(newDist > distance) { distance = newDist; } 
+                if (newDist > distance) { distance = newDist; }
             }
+            distance *= 2;
             this.BroadBoundingBox = new BoundingBox(Location, distance, distance);
 
         }

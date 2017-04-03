@@ -13,7 +13,7 @@ namespace Swords.Util
         private Vector2 vector;
         private float rotation;
 
-        public Vector2 Vector { get { return vector; } }
+        public Vector2 Vector { get { return vector; } set { vector = value; } }
         public float Rotation { get { return rotation; } }
 
         public Location(Vector2 vec, float rot)

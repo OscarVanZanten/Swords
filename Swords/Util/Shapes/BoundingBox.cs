@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-
 namespace Swords.Util.Shapes
 {
     class BoundingBox : Shape
@@ -31,12 +30,14 @@ namespace Swords.Util.Shapes
                 Line[] edges = new Line[Edges.Length];
                 for (int i = 0; i < Edges.Length; i++)
                 {
-                    edges[i] = new Line(Location.Vector + Edges[i].P1,Location.Vector + Edges[i].P2);
+                    edges[i] = new Line(Location.Vector + Edges[i].P1, Location.Vector + Edges[i].P2);
                 }
                 return edges;
             }
         }
 
+        public float Width { get { return width * 2; } }
+        public float Height { get { return height * 2; } }
         private float width, height;
 
         public BoundingBox(Location location, float width, float height)
@@ -56,24 +57,22 @@ namespace Swords.Util.Shapes
                 Edges[i] = new Line(Vertices[i], (i + 1 == Vertices.Length) ? Vertices[0] : Vertices[i + 1]);
             }
 
-            this.width = width/2;
-            this.height = height/2;
+            this.width = width / 2;
+            this.height = height / 2;
         }
 
         public override bool Contains(Vector2 p)
         {
-            bool containsX = p.X < width && p.X > -width;
-            bool containsY = p.Y < height && p.Y > -height;
-
+            bool containsX = p.X <= (Location.Vector.X + width + 1) && p.X >= (Location.Vector.X - width - 1);
+            bool containsY = p.Y <= (Location.Vector.Y + height + 1) && p.Y >= (Location.Vector.Y - height - 1);
             return (containsX && containsY);
         }
 
         public override bool Intersects(Shape p)
         {
-            Vector2[] vertices = AbsoluteVertices;
-            foreach (Vector2 vertex in vertices)
+            foreach (Vector2 vertex in p.AbsoluteVertices)
             {
-                if (p.Contains(vertex)) { return true; }
+                if (Contains(vertex)) { return true; }
             }
             return false;
         }
