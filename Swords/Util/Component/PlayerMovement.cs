@@ -16,11 +16,13 @@ namespace Swords.Util.Component
     {
         private GameObject entity;
         private RigidBody rigidbody;
-        private float speed;
+        private float maxSpeed;
+        private float acceleration;
 
-        public PlayerMovement(float speed)
+        public PlayerMovement(float maxSpeed, float acceleration)
         {
-            this.speed = speed;
+            this.maxSpeed = maxSpeed;
+            this.acceleration = acceleration;
         }
 
         public void Start(GameObject entity)
@@ -36,7 +38,7 @@ namespace Swords.Util.Component
                 Vector2 vec = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
                 vec.Y = -vec.Y;
 
-                entity.Location.Add(vec * speed);
+                entity.Location.Add(vec * maxSpeed);
                 entity.Location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
             }
             else
@@ -44,22 +46,20 @@ namespace Swords.Util.Component
                 Vector2 vec = new Vector2(
                         (Keyboard.GetState().IsKeyDown(Keys.D) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.A) ? -1 : 0),
                         (Keyboard.GetState().IsKeyDown(Keys.S) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.W) ? -1 : 0));
-
-                if (this.rigidbody.Velocity.Length() >= speed)
+                if (vec.Length() > 0)
                 {
-                    this.rigidbody.SetVelocity(vec);
+                    vec /= vec.Length();
                 }
-                else
+                vec *= acceleration;
+
+                this.rigidbody.AddVelocity(vec);
+
+                if ((rigidbody.Velocity).Length() > maxSpeed)
                 {
-                    this.rigidbody.AddVelocity(vec);
+                    this.rigidbody.Velocity /= rigidbody.Velocity.Length();
+                    this.rigidbody.Velocity *= maxSpeed;
                 }
             }
         }
-
-        public object Clone()
-        {
-            return new PlayerMovement(speed);
-        }
-
     }
 }

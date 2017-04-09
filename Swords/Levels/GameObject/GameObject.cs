@@ -13,7 +13,7 @@ using Swords.Util;
 
 namespace Swords.Levels.GameObjects
 {
-    class GameObject : IGameObject, Renderable, ICloneable
+    class GameObject : IGameObject, Renderable
     {
         public string Name { get { return name; } }
         public Location Location { get { return location; } set { location = value; } }
@@ -137,30 +137,6 @@ namespace Swords.Levels.GameObjects
         public void Remove()
         {
             Level.Instance.Remove(this);
-        }
-
-        public object Clone()
-        {
-            List<GameObject> childeren = new List<GameObject>();
-            List<Component> behaviors = new List<Component>();
-
-            foreach (GameObject child in this.childeren)
-            {
-                childeren.Add((GameObject)child.Clone());
-            }
-
-            foreach (Component behavior in this.behaviors)
-            {
-                behaviors.Add((Component)behavior.Clone());
-            }
-            GameObject entity = new GameObject(new Location(location.Vector.X, location.Vector.Y), animations, name, behaviors, childeren);
-
-            foreach (Component behavior in entity.behaviors)
-            {
-                behavior.Start(entity);
-            }
-
-            return entity;
         }
     }
 }

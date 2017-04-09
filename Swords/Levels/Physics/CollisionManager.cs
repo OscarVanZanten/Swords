@@ -65,13 +65,23 @@ namespace Swords.Levels.Physics
                 if (poss.Entry1.Collider.Hitbox.Intersects(poss.Entry2.Collider.Hitbox))
                 {
                     poss.Entry1.Collider.Collide();
-                    if (poss.Entry1.Rigidbody != null)
-                    {
-                        Vector2 force =  poss.Entry1.Rigidbody.Velocity * poss.Entry1.Rigidbody.Mass;
-                        poss.Entry2.Rigidbody.AddVelocity(force / poss.Entry1.Rigidbody.Mass);
-                        
 
-                    }
+                    //first entity
+                    GameObject fe = poss.Entry1.Entity;
+                    RigidBody fr = poss.Entry1.Rigidbody;
+                    Collider fc = poss.Entry1.Collider;
+
+                    //second entity
+                    GameObject se = poss.Entry2.Entity;
+                    RigidBody sr = poss.Entry2.Rigidbody;
+                    Collider sc = poss.Entry2.Collider;
+
+                    ////collision
+                    Vector2 fNormal = (fe.Location.Vector - se.Location.Vector) / (fe.Location.Vector - se.Location.Vector).Length();
+                    Console.WriteLine(fNormal);
+                    fr.AddForce(30, fNormal);
+                   // if(fe.Location.Vector - se.Location.Vector) { }
+
                 }
             }
         }

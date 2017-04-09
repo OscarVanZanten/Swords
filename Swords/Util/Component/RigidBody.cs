@@ -22,7 +22,7 @@ namespace Swords.Util.Component
         private Vector2 velocity;
 
         public float Mass { get { return mass; } }
-        public Vector2 Velocity { get { return velocity; } }
+        public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
 
         public RigidBody(float mass, float drag, float rotationalDrag, Vector2 velocity, float rotationVelocity)
         {
@@ -33,7 +33,8 @@ namespace Swords.Util.Component
             this.rotationVelocity = rotationVelocity;
         }
 
-        public RigidBody(float mass, float drag, float rotationDrag) : this(mass, drag,rotationDrag, new Vector2(), 0) { }
+        public RigidBody(float mass, float drag, float rotationDrag) :
+            this(mass, drag,rotationDrag, new Vector2(), 0) { }
 
         public void Start(GameObject entity)
         {
@@ -65,10 +66,28 @@ namespace Swords.Util.Component
             velocity = vec;
         }
 
-        public object Clone()
+        public void AddForce(float force, Vector2 direction)
         {
-            return new RigidBody(mass, drag, rotationalDrag, new Vector2(velocity.X, velocity.Y), rotationVelocity);
+            if (direction.X == 0 && direction.Y == 0) { return; }
+
+            direction /= direction.Length();
+            float velocity = (float)Math.Sqrt(force / mass);
+            direction *= velocity;
+            this.Velocity += direction;
         }
 
+        public float GetForce()
+        {
+            float force = 0.5f * mass * velocity.LengthSquared();
+            return force;
+        }
+
+        public Vector2 GetNormal()
+        {
+            Vector2 normal = (velocity / velocity.Length());
+            if (float.IsNaN(normal.X)) { normal.X = 0; }
+            if(float.IsNaN(normal.Y)) { normal.Y = 0; }
+            return normal;
+        }
     }
 }

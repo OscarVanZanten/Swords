@@ -53,7 +53,7 @@
     <Compile Include="Util\Component\PlayerMovement.cs" />
     <Compile Include="Levels\GameObject\GameObject.cs" />
     <Compile Include="Levels\GameObject\GameObjectFactory.cs" />
-    <Compile Include="Levels\GameObject\IGameObject.cs" />
+    <Compile Include="Rendering\IGameObject.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\Renderable.cs" />

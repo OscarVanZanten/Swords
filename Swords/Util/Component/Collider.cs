@@ -38,11 +38,6 @@ namespace Swords.Util.Component
             listeneners.Add(listenener);
         }
 
-        public object Clone()
-        {
-            return new Collider(Hitbox, draw);
-        }
-
         public void Start(GameObject entity)
         {
             this.entity = entity;

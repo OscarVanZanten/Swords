@@ -7,7 +7,7 @@ using Swords.Levels.GameObjects;
 
 namespace Swords.Util.Component
 {
-    interface Component : ICloneable
+    interface Component
     {
         void Start(GameObject entity);
         void Update();
