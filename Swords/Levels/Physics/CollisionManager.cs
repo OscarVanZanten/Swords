@@ -70,17 +70,20 @@ namespace Swords.Levels.Physics
                     RigidBody fr = poss.Entry1.Rigidbody;
                     GameObject se = poss.Entry2.Entity;
                     RigidBody sr = poss.Entry2.Rigidbody;
-                    Vector2 fNormal = ((fe.Location.Vector - se.Location.Vector) / (fe.Location.Vector - se.Location.Vector).Length());
+                    if (sr != null && fr != null)
+                    {
+                        Vector2 fNormal = ((fe.Location.Vector - se.Location.Vector) / (fe.Location.Vector - se.Location.Vector).Length());
 
-                    Vector2 rv = fr.Velocity - sr.Velocity;
-                    float velAlongNormal = Vector2.Dot(rv, fNormal);
-                    if (velAlongNormal > 0) { return; }
-                    float e = Math.Min(fr.Restitution, sr.Restitution);
-                    float j = (-(1 + e) * velAlongNormal) / (1 / fr.Mass + 1 / sr.Mass);
-                    Vector2 impulse = j * fNormal;
+                        Vector2 rv = fr.Velocity - sr.Velocity;
+                        float velAlongNormal = Vector2.Dot(rv, fNormal);
+                        if (velAlongNormal > 0) { return; }
+                        float e = Math.Min(fr.Restitution, sr.Restitution);
+                        float j = (-(1 + e) * velAlongNormal) / (1 / fr.Mass + 1 / sr.Mass);
+                        Vector2 impulse = j * fNormal;
 
-                    fr.AddVelocity((1 / fr.Mass * impulse));
-                    sr.AddVelocity(-(1 / sr.Mass * impulse));
+                        fr.AddVelocity((1 / fr.Mass * impulse));
+                        sr.AddVelocity(-(1 / sr.Mass * impulse));
+                    }
                 }
             }
         }
