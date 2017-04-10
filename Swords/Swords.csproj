@@ -50,7 +50,8 @@
     <Compile Include="Util\Animations\Playable.cs" />
     <Compile Include="Util\Component\Collider.cs" />
     <Compile Include="Util\Component\Component.cs" />
-    <Compile Include="Util\Component\PlayerMovement.cs" />
+    <Compile Include="Util\Component\Player\PlayerCombat.cs" />
+    <Compile Include="Util\Component\Player\PlayerMovement.cs" />
     <Compile Include="Levels\GameObject\GameObject.cs" />
     <Compile Include="Levels\GameObject\GameObjectFactory.cs" />
     <Compile Include="Rendering\IGameObject.cs" />

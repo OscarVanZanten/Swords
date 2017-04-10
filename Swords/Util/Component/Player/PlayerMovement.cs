@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Swords.Util;
 using Swords.Levels.GameObjects;
 
-namespace Swords.Util.Component
+namespace Swords.Util.Component.Player
 {
     class PlayerMovement : Component
     {
