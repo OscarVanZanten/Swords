@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework;
 using Swords.Util;
 using Swords.Content;
 using Swords.Util.Component;
-using Swords.Util.Component.Player;
 using Swords.Util.Animations;
 
 namespace Swords.Levels.GameObjects
@@ -21,37 +20,32 @@ namespace Swords.Levels.GameObjects
             switch (name)
             {
                 case "Player":
-                    GameObject sword = GetEntity("Sword", new Location(3, 3));
-                    return new GameObject(loc,
+                    return new GameObject(
+                        loc,
                         new AnimationPlayer(
                             new List<Animation>()
                             {
                                 ContentRegistry.Animations.Get("Grass-Animation")
-                            }), "Player")
-                    .AddChild(sword)
+                            }),
+                        "Player")
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
-                    .AddBehavior(new RigidBody(100, 0.01f, 750, 0.001f, new Vector2(), 0))
-                    .AddBehavior(new PlayerMovement(250, 500000))
-                    .AddBehavior(new PlayerCombat(sword));
+                    .AddBehavior(new RigidBody(100,0.01f, 750, 0.001f, new Vector2(), 0))
+                    .AddBehavior(new PlayerMovement(250,500000));
                 case "Object":
-                    return new GameObject(loc,
+                    return new GameObject(
+                        loc,
                         new AnimationPlayer(
                             new List<Animation>()
                             {
                                 ContentRegistry.Animations.Get("Grass-Animation")
-                            }), "Object")
+                            }), 
+                        "Object")
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
-                    .AddBehavior(new RigidBody(250, 0.01f, 750, 0.001f, new Vector2(), 0.0f));
-                case "Sword":
-                    return new GameObject(loc,
-                         new AnimationPlayer(
-                            new List<Animation>()
-                            {
-                                ContentRegistry.Animations.Get("Grass-Animation")
-                            }), "Sword");
-                default:
-                    return null;
+                    .AddBehavior(new RigidBody(250,0.01f, 750, 0.001f, new Vector2(), 0.0f));
             }
+
+            return null;
         }
+
     }
 }

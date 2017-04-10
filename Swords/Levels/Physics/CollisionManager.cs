@@ -70,8 +70,7 @@ namespace Swords.Levels.Physics
                     RigidBody fr = poss.Entry1.Rigidbody;
                     GameObject se = poss.Entry2.Entity;
                     RigidBody sr = poss.Entry2.Rigidbody;
-
-                    if (fr != null && sr != null)
+                    if (sr != null && fr != null)
                     {
                         Vector2 fNormal = ((fe.Location.Vector - se.Location.Vector) / (fe.Location.Vector - se.Location.Vector).Length());
 
