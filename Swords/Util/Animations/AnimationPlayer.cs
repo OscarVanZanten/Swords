@@ -17,7 +17,7 @@ namespace Swords.Util.Animations
         private Texture2D sprite;
         private bool playing;
         private int index;
-        private int time;
+        private float time;
 
         public AnimationPlayer(List<Animation> animations)
         {
@@ -51,14 +51,14 @@ namespace Swords.Util.Animations
             time = 0;
         }
 
-        public void Update()
+        public void Update(float deltatime)
         {
             if (playing && !IsEmpty())
             {
-                time++;
-                if (time == animation.Time)
+                time += deltatime;
+                if (time >= animation.Time)
                 {
-                    time = 0;
+                    time -= animation.Time;
                     index++;
                     if (index == animation.Length)
                     {

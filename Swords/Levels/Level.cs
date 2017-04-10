@@ -27,13 +27,14 @@ namespace Swords.Levels
             SwordsGame.Renderer.Register(this);
         }
 
-        public void Update()
+        public void Update(float time)
         {
+            //Console.WriteLine(time);
             foreach (GameObject entity in entities)
             {
-                entity.Update();
+                entity.Update(time);
             }
-            CollisionManager.Instance.Update();
+            CollisionManager.Instance.Update(time);
         }
 
         public GameObject SpawnEntity(string name, Location location)

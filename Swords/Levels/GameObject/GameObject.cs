@@ -13,7 +13,7 @@ using Swords.Util;
 
 namespace Swords.Levels.GameObjects
 {
-    class GameObject : IGameObject, Renderable
+    class GameObject : Renderable
     {
         public string Name { get { return name; } }
         public Location Location { get { return location; } set { location = value; } }
@@ -62,16 +62,16 @@ namespace Swords.Levels.GameObjects
             return sprites.ToArray();
         }
 
-        public void Update()
+        public void Update(float time)
         {
-            animations.Update();
+            animations.Update(time);
             foreach (GameObject child in childeren)
             {
-                child.Update();
+                child.Update(time);
             }
             foreach (Component behavior in behaviors)
             {
-                behavior.Update();
+                behavior.Update(time);
             }
         }
 

@@ -31,7 +31,7 @@ namespace Swords.Util.Component
             this.rigidbody = entity.GetBehavior<RigidBody>();
         }
 
-        public void Update()
+        public void Update(float time)
         {
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {
@@ -50,11 +50,8 @@ namespace Swords.Util.Component
                 {
                     vec /= vec.Length();
                 }
-                vec *= acceleration;
-
-                this.rigidbody.AddVelocity(vec);
-
-                if ((rigidbody.Velocity).Length() > maxSpeed)
+                this.rigidbody.AddForce(acceleration * time, vec);
+                if ((rigidbody.Velocity).Length()  > maxSpeed)
                 {
                     this.rigidbody.Velocity /= rigidbody.Velocity.Length();
                     this.rigidbody.Velocity *= maxSpeed;

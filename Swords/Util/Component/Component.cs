@@ -10,6 +10,6 @@ namespace Swords.Util.Component
     interface Component
     {
         void Start(GameObject entity);
-        void Update();
+        void Update(float time);
     }
 }

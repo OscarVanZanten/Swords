@@ -17,43 +17,47 @@ namespace Swords.Util.Component
         private float mass;
         private float drag;
         private float rotationalDrag;
+        private float restitution;
 
         private float rotationVelocity;
         private Vector2 velocity;
 
         public float Mass { get { return mass; } }
+        public float Restitution { get { return restitution; } }
         public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
 
-        public RigidBody(float mass, float drag, float rotationalDrag, Vector2 velocity, float rotationVelocity)
+        public RigidBody(float mass, float restitution, float drag, float rotationalDrag, Vector2 velocity, float rotationVelocity)
         {
             this.mass = mass;
+            this.restitution = restitution;
             this.drag = drag;
             this.rotationalDrag = rotationalDrag;
             this.velocity = velocity;
             this.rotationVelocity = rotationVelocity;
         }
 
-        public RigidBody(float mass, float drag, float rotationDrag) :
-            this(mass, drag,rotationDrag, new Vector2(), 0) { }
+        public RigidBody(float mass,float restitution, float drag, float rotationDrag) :
+            this(mass, restitution, drag, rotationDrag, new Vector2(), 0)
+        { }
 
         public void Start(GameObject entity)
         {
             this.entity = entity;
         }
 
-        public void Update()
+        public void Update(float time)
         {
-            entity.Location.Add(velocity);
-            entity.Location.IncRotation(rotationVelocity);
+            entity.Location.Add(velocity * time);
+            entity.Location.IncRotation(rotationVelocity * time);
 
             rotationVelocity = rotationVelocity < 0 ?
                 (Math.Abs(rotationVelocity) < rotationalDrag) ? 0 : rotationVelocity + rotationalDrag :
                 (Math.Abs(rotationVelocity) < rotationalDrag) ? 0 : rotationVelocity - rotationalDrag;
 
             float length = velocity.Length();
-
-            velocity.X = (length - drag > 0) ? velocity.X / length * (length - drag) : 0;
-            velocity.Y = (length - drag > 0) ? velocity.Y / length * (length - drag) : 0;
+            float timeDrag = drag * time;
+            velocity.X = (length - timeDrag > 0) ? velocity.X / length * (length - timeDrag) : 0;
+            velocity.Y = (length - timeDrag > 0) ? velocity.Y / length * (length - timeDrag) : 0;
         }
 
         public void AddVelocity(Vector2 vec)
@@ -86,7 +90,7 @@ namespace Swords.Util.Component
         {
             Vector2 normal = (velocity / velocity.Length());
             if (float.IsNaN(normal.X)) { normal.X = 0; }
-            if(float.IsNaN(normal.Y)) { normal.Y = 0; }
+            if (float.IsNaN(normal.Y)) { normal.Y = 0; }
             return normal;
         }
     }

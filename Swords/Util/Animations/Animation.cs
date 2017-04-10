@@ -12,12 +12,12 @@ namespace Swords.Util.Animations
     {
         public Texture2D[] Textures { get { return textures; } }
         public int Length { get { return textures.Length; } }
-        public int Time { get { return time; } }
+        public float Time { get { return time; } }
 
         private Texture2D[] textures;
-        private int time;
+        private float time;
 
-        public Animation(Texture2D[] textures, int time)
+        public Animation(Texture2D[] textures, float time)
         {
             this.textures = textures;
             this.time = time;

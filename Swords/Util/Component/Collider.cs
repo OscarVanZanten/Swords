@@ -44,7 +44,7 @@ namespace Swords.Util.Component
             Hitbox.Location = entity.Location;
         }
 
-        public void Update()
+        public void Update(float time)
         {
         }
     }

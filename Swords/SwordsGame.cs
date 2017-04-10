@@ -35,6 +35,7 @@ namespace Swords
 
         protected override void Initialize()
         {
+            this.IsFixedTimeStep = false;
             base.Initialize();
             Level.Instance.Init();
         }
@@ -68,12 +69,12 @@ namespace Swords
                         ContentRegistry.Textures.Get("Grass7"),
                         ContentRegistry.Textures.Get("Grass8"),
                         ContentRegistry.Textures.Get("Grass9")
-                    }, 15));
+                    }, 0.2f));
 
             Level.Instance.SpawnEntity("Player", new Location(50, 100, 0));
             Level.Instance.SpawnEntity("Object", new Location(150, 100, 0));
-            Level.Instance.SpawnEntity("Object", new Location(200, 100, 0));
-            Level.Instance.SpawnEntity("Object", new Location(250, 100, 0));
+            //Level.Instance.SpawnEntity("Object", new Location(200, 100, 0));
+            //Level.Instance.SpawnEntity("Object", new Location(250, 100, 0));
         }
 
         protected override void UnloadContent()
@@ -86,7 +87,7 @@ namespace Swords
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            Level.Instance.Update();
+            Level.Instance.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             base.Update(gameTime);
         }

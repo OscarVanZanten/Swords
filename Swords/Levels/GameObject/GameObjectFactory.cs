@@ -29,8 +29,8 @@ namespace Swords.Levels.GameObjects
                             }),
                         "Player")
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
-                    .AddBehavior(new RigidBody(100, 1f, 0.001f, new Vector2(), 0.0f))
-                    .AddBehavior(new PlayerMovement(3,1.2f));
+                    .AddBehavior(new RigidBody(100,0.01f, 750, 0.001f, new Vector2(), 0))
+                    .AddBehavior(new PlayerMovement(250,500000));
                 case "Object":
                     return new GameObject(
                         loc,
@@ -41,7 +41,7 @@ namespace Swords.Levels.GameObjects
                             }), 
                         "Object")
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
-                    .AddBehavior(new RigidBody(10, 0.5f, 0.001f, new Vector2(), 0.0f));
+                    .AddBehavior(new RigidBody(250,0.01f, 750, 0.001f, new Vector2(), 0.0f));
             }
 
             return null;

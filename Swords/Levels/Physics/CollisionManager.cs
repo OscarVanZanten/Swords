@@ -39,7 +39,7 @@ namespace Swords.Levels.Physics
             }
         }
 
-        public void Update()
+        public void Update(float time)
         {
             List<CollisionPossibility> possibilties = new List<CollisionPossibility>();
             //update boundingboxes
@@ -65,23 +65,22 @@ namespace Swords.Levels.Physics
                 if (poss.Entry1.Collider.Hitbox.Intersects(poss.Entry2.Collider.Hitbox))
                 {
                     poss.Entry1.Collider.Collide();
-
-                    //first entity
+                   //s poss.Entry2.Collider.Collide();
                     GameObject fe = poss.Entry1.Entity;
                     RigidBody fr = poss.Entry1.Rigidbody;
-                    Collider fc = poss.Entry1.Collider;
-
-                    //second entity
                     GameObject se = poss.Entry2.Entity;
                     RigidBody sr = poss.Entry2.Rigidbody;
-                    Collider sc = poss.Entry2.Collider;
+                    Vector2 fNormal = ((fe.Location.Vector - se.Location.Vector) / (fe.Location.Vector - se.Location.Vector).Length());
 
-                    ////collision
-                    Vector2 fNormal = (fe.Location.Vector - se.Location.Vector) / (fe.Location.Vector - se.Location.Vector).Length();
-                    Console.WriteLine(fNormal);
-                    fr.AddForce(30, fNormal);
-                   // if(fe.Location.Vector - se.Location.Vector) { }
+                    Vector2 rv = fr.Velocity - sr.Velocity;
+                    float velAlongNormal = Vector2.Dot(rv, fNormal);
+                    if (velAlongNormal > 0) { return; }
+                    float e = Math.Min(fr.Restitution, sr.Restitution);
+                    float j = (-(1 + e) * velAlongNormal) / (1 / fr.Mass + 1 / sr.Mass);
+                    Vector2 impulse = j * fNormal;
 
+                    fr.AddVelocity((1 / fr.Mass * impulse));
+                    sr.AddVelocity(-(1 / sr.Mass * impulse));
                 }
             }
         }
