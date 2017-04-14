@@ -65,7 +65,7 @@ namespace Swords.Levels.Physics
                 if (poss.Entry1.Collider.Hitbox.Intersects(poss.Entry2.Collider.Hitbox))
                 {
                     poss.Entry1.Collider.Collide();
-                   //s poss.Entry2.Collider.Collide();
+                    //s poss.Entry2.Collider.Collide();
                     GameObject fe = poss.Entry1.Entity;
                     RigidBody fr = poss.Entry1.Rigidbody;
                     GameObject se = poss.Entry2.Entity;

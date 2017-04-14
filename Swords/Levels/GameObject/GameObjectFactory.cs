@@ -20,28 +20,34 @@ namespace Swords.Levels.GameObjects
             switch (name)
             {
                 case "Player":
-                    return new GameObject(
-                        loc,
+                    GameObject sword = GetEntity("Sword", new Location(10, 10));
+                    return new GameObject(loc,
                         new AnimationPlayer(
                             new List<Animation>()
                             {
                                 ContentRegistry.Animations.Get("Grass-Animation")
-                            }),
-                        "Player")
+                            }),"Player")
+                    .AddChild(sword)
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
                     .AddBehavior(new RigidBody(100,0.01f, 750, 0.001f, new Vector2(), 0))
-                    .AddBehavior(new PlayerMovement(250,500000));
+                    .AddBehavior(new PlayerMovement(250,500000))
+                    .AddBehavior(new PlayerCombat(sword));
                 case "Object":
-                    return new GameObject(
-                        loc,
+                    return new GameObject(loc,
                         new AnimationPlayer(
                             new List<Animation>()
                             {
                                 ContentRegistry.Animations.Get("Grass-Animation")
-                            }), 
-                        "Object")
+                            }), "Object")
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
                     .AddBehavior(new RigidBody(250,0.01f, 750, 0.001f, new Vector2(), 0.0f));
+                case "Sword":
+                    return new GameObject(loc,
+                        new AnimationPlayer(
+                            new List<Animation>()
+                            {
+                                ContentRegistry.Animations.Get("Grass-Animation")
+                            }), "Sword");
             }
 
             return null;

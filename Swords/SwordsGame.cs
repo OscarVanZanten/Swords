@@ -71,10 +71,10 @@ namespace Swords
                         ContentRegistry.Textures.Get("Grass9")
                     }, 0.2f));
 
-            Level.Instance.SpawnEntity("Player", new Location(50, 100, 0));
-            Level.Instance.SpawnEntity("Object", new Location(150, 100, 0));
-            //Level.Instance.SpawnEntity("Object", new Location(200, 100, 0));
-            //Level.Instance.SpawnEntity("Object", new Location(250, 100, 0));
+            Level.Instance.SpawnEntity("Player", new Location(150, 100, 0));
+            Level.Instance.SpawnEntity("Object", new Location(100, 100, 0));
+            Level.Instance.SpawnEntity("Object", new Location(200, 100, 0));
+            Level.Instance.SpawnEntity("Object", new Location(250, 100, 0));
         }
 
         protected override void UnloadContent()
@@ -87,6 +87,7 @@ namespace Swords
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            UpdatesPerSecond(gameTime);
             Level.Instance.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             base.Update(gameTime);
@@ -97,6 +98,27 @@ namespace Swords
             GraphicsDevice.Clear(Color.CornflowerBlue);
             Renderer.Render();
             base.Draw(gameTime);
+        }
+
+        int index = 0;
+        float[] updates = new float[512];
+        private void UpdatesPerSecond(GameTime gameTime)
+        {
+            updates[index] = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            index++;
+            if (index == updates.Length)
+            {
+                index = 0;
+            }
+
+            float time = 0;
+            foreach (float f in updates)
+            {
+                time += f;
+            }
+
+            float ups = updates.Length / time;
+            Console.WriteLine("Ups: " + ups);
         }
     }
 }
