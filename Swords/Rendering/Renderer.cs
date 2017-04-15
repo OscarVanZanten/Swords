@@ -26,11 +26,17 @@ namespace Swords.Rendering
             this.graphics = graphics;
             this.spritebatch = spritebatch;
             this.device = device;
+            // device.Adapter.SupportedDisplayModes.;
+            foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
+            {
+                graphics.PreferredBackBufferHeight = mode.Height;
+                graphics.PreferredBackBufferWidth = mode.Width;
+            }
             graphics.SynchronizeWithVerticalRetrace = true;
             graphics.PreferMultiSampling = true;
             graphics.ToggleFullScreen();
             graphics.ApplyChanges();
-            Camera.Zoom = 2;
+            Camera.Zoom = 1;
         }
 
         public void Render()

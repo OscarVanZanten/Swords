@@ -18,6 +18,8 @@ namespace Swords.Util.Component
         private RigidBody rigidbody;
         private float maxSpeed;
         private float acceleration;
+        private bool moving;
+
 
         public PlayerMovement(float maxSpeed, float acceleration)
         {
@@ -29,34 +31,44 @@ namespace Swords.Util.Component
         {
             this.entity = entity;
             this.rigidbody = entity.GetBehavior<RigidBody>();
+            this.moving = true;
         }
 
         public void Update(float time)
         {
-            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+            if (moving)
             {
-                Vector2 vec = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
-                vec.Y = -vec.Y;
+                Vector2 vec = new Vector2();
 
-                entity.Location.Add(vec * maxSpeed);
-                entity.Location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
-            }
-            else
-            {
-                Vector2 vec = new Vector2(
-                        (Keyboard.GetState().IsKeyDown(Keys.D) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.A) ? -1 : 0),
-                        (Keyboard.GetState().IsKeyDown(Keys.S) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.W) ? -1 : 0));
+                if (GamePad.GetState(PlayerIndex.One).IsConnected)
+                {
+                    vec = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
+                    vec.Y = -vec.Y;
+                    entity.Location.SetRotation(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right);
+                }
+                else
+                {
+                    vec = new Vector2(
+                            (Keyboard.GetState().IsKeyDown(Keys.D) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.A) ? -1 : 0),
+                            (Keyboard.GetState().IsKeyDown(Keys.S) ? 1 : 0) + (Keyboard.GetState().IsKeyDown(Keys.W) ? -1 : 0));
+
+                }
                 if (vec.Length() > 0)
                 {
                     vec /= vec.Length();
                 }
-                if ((rigidbody.Velocity).Length()  > maxSpeed)
+                if ((rigidbody.Velocity).Length() > maxSpeed)
                 {
                     this.rigidbody.Velocity /= rigidbody.Velocity.Length();
                     this.rigidbody.Velocity *= maxSpeed;
                 }
                 this.rigidbody.AddForce(acceleration * time, vec);
             }
+        }
+
+        public void SetMoving(bool moving)
+        {
+            this.moving = moving;
         }
     }
 }

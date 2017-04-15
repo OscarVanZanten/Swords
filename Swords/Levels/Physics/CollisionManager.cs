@@ -65,25 +65,44 @@ namespace Swords.Levels.Physics
                 if (poss.Entry1.Collider.Hitbox.Intersects(poss.Entry2.Collider.Hitbox))
                 {
                     poss.Entry1.Collider.Collide();
-                    //s poss.Entry2.Collider.Collide();
                     GameObject fe = poss.Entry1.Entity;
                     RigidBody fr = poss.Entry1.Rigidbody;
                     GameObject se = poss.Entry2.Entity;
                     RigidBody sr = poss.Entry2.Rigidbody;
 
-                    if (sr != null && fr != null)
+                    if (sr != null || fr != null)
                     {
                         Vector2 fNormal = ((fe.Location.Vector - se.Location.Vector) / (fe.Location.Vector - se.Location.Vector).Length());
-
-                        Vector2 rv = (fr.Velocity - sr.Velocity) ;
-                        float velAlongNormal = Vector2.Dot(rv, fNormal) ;
-                        if (velAlongNormal > 0) { return; }
-                        float e = Math.Min(fr.Restitution, sr.Restitution) * time;
-                        float j = (-(1 + e) * velAlongNormal) / (1 / fr.Mass + 1 / sr.Mass);
+                        float j = 0;
+                        if (sr != null && fr != null)
+                        {
+                            Vector2 rv = (fr.Velocity - sr.Velocity);
+                            float velAlongNormal = Vector2.Dot(rv, fNormal);
+                            if (velAlongNormal > 0) { return; }
+                            float e = Math.Min(fr.Restitution, sr.Restitution) * time;
+                            j = (-(1 + e) * velAlongNormal) / (1 / fr.Mass + 1 / sr.Mass);
+                        }
+                        else if (sr != null)
+                        {
+                            Vector2 rv = (new Vector2() - sr.Velocity);
+                            float velAlongNormal = Vector2.Dot(rv, fNormal);
+                            if (velAlongNormal > 0) { return; }
+                            float e = Math.Min(0, sr.Restitution) * time;
+                            j = (-(1 + e) * velAlongNormal) / (1 / sr.Mass);
+                        }
+                        else if (fr != null)
+                        {
+                            Vector2 rv = (fr.Velocity - new Vector2());
+                            float velAlongNormal = Vector2.Dot(rv, fNormal);
+                            if (velAlongNormal > 0) { return; }
+                            float e = Math.Min(fr.Restitution, 0) * time;
+                            j = (-(1 + e) * velAlongNormal) / (1 / fr.Mass);
+                        }
                         Vector2 impulse = j * fNormal;
-
-                        fr.AddVelocity((1 / fr.Mass * impulse) );
-                        sr.AddVelocity(-(1 / sr.Mass * impulse) );
+                        if (fr != null)
+                        {
+                            fr.AddVelocity((1 / fr.Mass * impulse));
+                        }
                     }
                 }
             }

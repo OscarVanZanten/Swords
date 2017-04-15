@@ -29,7 +29,7 @@ namespace Swords.Levels.GameObjects
                             }),"Player")
                     .AddChild(sword)
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
-                    .AddBehavior(new RigidBody(100,0.01f, 750, 0.001f, new Vector2(), 0))
+                    .AddBehavior(new RigidBody(100,0.01f, 1000, 0.001f, new Vector2(), 0))
                     .AddBehavior(new PlayerMovement(250,5000000))
                     .AddBehavior(new PlayerCombat(sword));
                 case "Object":
@@ -41,12 +41,20 @@ namespace Swords.Levels.GameObjects
                             }), "Object")
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
                     .AddBehavior(new RigidBody(250,0.01f, 100, 0.001f, new Vector2(), 0));
-                case "Sword":
+                case "Wall":
                     return new GameObject(loc,
                         new AnimationPlayer(
                             new List<Animation>()
                             {
                                 ContentRegistry.Animations.Get("Grass-Animation")
+                            }), "Wall")
+                    .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true));
+                case "Sword":
+                    return new GameObject(loc,
+                        new AnimationPlayer(
+                            new List<Animation>()
+                            {
+                                ContentRegistry.Animations.Get("Sword-Animation")
                             }), "Sword");
             }
 

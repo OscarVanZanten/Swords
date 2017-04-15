@@ -28,6 +28,9 @@ namespace Swords.Content
             ContentRegistry.Textures.Add("Grass7", Content.Load<Texture2D>("Grass7"));
             ContentRegistry.Textures.Add("Grass8", Content.Load<Texture2D>("Grass8"));
             ContentRegistry.Textures.Add("Grass9", Content.Load<Texture2D>("Grass9"));
+            ContentRegistry.Textures.Add("Sword", Content.Load<Texture2D>("Sword"));
+
+
         }
 
         private static void InitAnimations()
@@ -46,6 +49,14 @@ namespace Swords.Content
                         ContentRegistry.Textures.Get("Grass7"),
                         ContentRegistry.Textures.Get("Grass8"),
                         ContentRegistry.Textures.Get("Grass9")
+                    }, 0.2f));
+
+            ContentRegistry.Animations.Add(
+                "Sword-Animation",
+                new Animation(
+                    new Texture2D[]
+                    {
+                        ContentRegistry.Textures.Get("Sword"),
                     }, 0.2f));
         }
 

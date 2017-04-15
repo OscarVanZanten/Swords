@@ -47,6 +47,7 @@ namespace Swords
             Level.Instance.SpawnEntity("Player", new Location(150, 100, 0));
             Level.Instance.SpawnEntity("Object", new Location(50, 50, 0));
             Level.Instance.SpawnEntity("Object", new Location(100, 50, 0));
+            Level.Instance.SpawnEntity("Wall", new Location(300, 200, 0));
         }
 
         protected override void UnloadContent()
