@@ -36,7 +36,7 @@ namespace Swords.Util.Component
             this.rotationVelocity = rotationVelocity;
         }
 
-        public RigidBody(float mass,float restitution, float drag, float rotationDrag) :
+        public RigidBody(float mass, float restitution, float drag, float rotationDrag) :
             this(mass, restitution, drag, rotationDrag, new Vector2(), 0)
         { }
 
@@ -47,17 +47,17 @@ namespace Swords.Util.Component
 
         public void Update(float time)
         {
-            entity.Location.Add(velocity * time);
-            entity.Location.IncRotation(rotationVelocity * time);
-
-            rotationVelocity = rotationVelocity < 0 ?
-                (Math.Abs(rotationVelocity) < rotationalDrag) ? 0 : rotationVelocity + rotationalDrag :
-                (Math.Abs(rotationVelocity) < rotationalDrag) ? 0 : rotationVelocity - rotationalDrag;
-
             float length = velocity.Length();
             float timeDrag = drag * time;
+            entity.Location.Add(velocity * time);
             velocity.X = (length - timeDrag > 0) ? velocity.X / length * (length - timeDrag) : 0;
             velocity.Y = (length - timeDrag > 0) ? velocity.Y / length * (length - timeDrag) : 0;
+
+            entity.Location.IncRotation(rotationVelocity * time);
+            float timeRotDrag = rotationalDrag * time;
+            rotationVelocity = rotationVelocity < 0 ?
+                (Math.Abs(rotationVelocity) < timeRotDrag) ? 0 : rotationVelocity + timeRotDrag :
+                (Math.Abs(rotationVelocity) < timeRotDrag) ? 0 : rotationVelocity - timeRotDrag;
         }
 
         public void AddVelocity(Vector2 vec)

@@ -50,12 +50,12 @@ namespace Swords.Util.Component
                 {
                     vec /= vec.Length();
                 }
-                this.rigidbody.AddForce(acceleration * time, vec);
                 if ((rigidbody.Velocity).Length()  > maxSpeed)
                 {
                     this.rigidbody.Velocity /= rigidbody.Velocity.Length();
                     this.rigidbody.Velocity *= maxSpeed;
                 }
+                this.rigidbody.AddForce(acceleration * time, vec);
             }
         }
     }

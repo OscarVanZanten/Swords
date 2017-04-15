@@ -26,7 +26,7 @@ namespace Swords.Rendering
             this.graphics = graphics;
             this.spritebatch = spritebatch;
             this.device = device;
-            graphics.SynchronizeWithVerticalRetrace = false;
+            graphics.SynchronizeWithVerticalRetrace = true;
             graphics.PreferMultiSampling = true;
             graphics.ToggleFullScreen();
             graphics.ApplyChanges();
