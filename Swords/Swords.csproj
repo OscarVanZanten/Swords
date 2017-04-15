@@ -41,6 +41,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Content\ContentFactory.cs" />
     <Compile Include="Content\ContentRegistry.cs" />
     <Compile Include="Levels\Physics\ColliderEntry.cs" />
     <Compile Include="Levels\Physics\CollisionManager.cs" />

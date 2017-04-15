@@ -23,8 +23,6 @@ namespace Swords
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-        //rendering
         public static Renderer Renderer;
 
         public SwordsGame()
@@ -44,37 +42,10 @@ namespace Swords
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Renderer = new Renderer(graphics, spriteBatch, GraphicsDevice);
-
-            ContentRegistry.Textures.Add("Grass", Content.Load<Texture2D>("Grass"));
-            ContentRegistry.Textures.Add("Grass2", Content.Load<Texture2D>("Grass2"));
-            ContentRegistry.Textures.Add("Grass3", Content.Load<Texture2D>("Grass3"));
-            ContentRegistry.Textures.Add("Grass4", Content.Load<Texture2D>("Grass4"));
-            ContentRegistry.Textures.Add("Grass5", Content.Load<Texture2D>("Grass5"));
-            ContentRegistry.Textures.Add("Grass6", Content.Load<Texture2D>("Grass6"));
-            ContentRegistry.Textures.Add("Grass7", Content.Load<Texture2D>("Grass7"));
-            ContentRegistry.Textures.Add("Grass8", Content.Load<Texture2D>("Grass8"));
-            ContentRegistry.Textures.Add("Grass9", Content.Load<Texture2D>("Grass9"));
-
-            ContentRegistry.Animations.Add(
-                "Grass-Animation",
-                new Animation(
-                    new Texture2D[]
-                    {
-                        ContentRegistry.Textures.Get("Grass"),
-                        ContentRegistry.Textures.Get("Grass2"),
-                        ContentRegistry.Textures.Get("Grass3"),
-                        ContentRegistry.Textures.Get("Grass4"),
-                        ContentRegistry.Textures.Get("Grass5"),
-                        ContentRegistry.Textures.Get("Grass6"),
-                        ContentRegistry.Textures.Get("Grass7"),
-                        ContentRegistry.Textures.Get("Grass8"),
-                        ContentRegistry.Textures.Get("Grass9")
-                    }, 0.2f));
+            ContentFactory.Init(Content);
 
             Level.Instance.SpawnEntity("Player", new Location(50, 100, 0));
             Level.Instance.SpawnEntity("Object", new Location(150, 100, 0));
-            //Level.Instance.SpawnEntity("Object", new Location(200, 100, 0));
-            //Level.Instance.SpawnEntity("Object", new Location(250, 100, 0));
         }
 
         protected override void UnloadContent()
@@ -85,10 +56,11 @@ namespace Swords
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 Exit();
 
+            }
             Level.Instance.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-
             base.Update(gameTime);
         }
 

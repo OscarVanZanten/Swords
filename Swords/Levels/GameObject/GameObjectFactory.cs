@@ -41,7 +41,14 @@ namespace Swords.Levels.GameObjects
                             }), 
                         "Object")
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
-                    .AddBehavior(new RigidBody(250,0.01f, 750, 0.001f, new Vector2(), 0.0f));
+                    .AddBehavior(new RigidBody(250,0.01f, 100, 0.001f, new Vector2(), 0));
+                case "Sword":
+                    return new GameObject(loc,
+                        new AnimationPlayer(
+                            new List<Animation>()
+                            {
+                                ContentRegistry.Animations.Get("Grass-Animation")
+                            }), "Sword");
             }
 
             return null;
