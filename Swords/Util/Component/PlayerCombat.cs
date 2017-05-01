@@ -21,7 +21,9 @@ namespace Swords.Util.Component
 
         private GamePadState last;
 
-        private float dashForce = 50000000;
+        private float dashForce = 80000000;
+        private float timer = 0;
+        private float maxTime = 0.33f;
         private bool dashing = false;
 
         public PlayerCombat(GameObject sword)
@@ -50,16 +52,18 @@ namespace Swords.Util.Component
                 playerBody.AddForce(dashForce, player.Location.GetRetotation());
             }
 
-            if (playerBody.Velocity.Length() == 0)
-            {
-                playerMove.SetMoving(true);
-                dashing = true;
-            }
-
             if (dashing)
             {
+                timer += time;
 
+            }
 
+            if (timer > maxTime)
+            {
+                timer -= maxTime;
+                playerBody.SetVelocity(new Vector2(0, 0));
+                playerMove.SetMoving(true);
+                dashing = false;
             }
 
             last = current;
