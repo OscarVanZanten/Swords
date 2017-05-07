@@ -44,17 +44,18 @@ namespace Swords.Util
 
         public void SetRotation(Vector2 rot)
         {
-            float d = (float)(Math.Atan2(rot.X, rot.Y));
-            if (d == d)
+            float d = (float)(Math.Atan2(rot.X, -rot.Y));
+            rotation = d;
+            if (d == float.NaN)
             {
-                rotation = d;
+                d = 0;
             }
         }
 
         public Vector2 GetRetotation()
         {
             Vector2 vec = new Vector2(
-                (float)Math.Cos(rotation - Math.PI / 2) ,
+                (float)Math.Cos(rotation - Math.PI / 2),
                 (float)Math.Sin(rotation - Math.PI / 2));
             return vec;
         }

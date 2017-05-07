@@ -34,6 +34,7 @@ namespace Swords
         protected override void Initialize()
         {
             this.IsFixedTimeStep = false;
+            this.IsMouseVisible = true;
             base.Initialize();
             Level.Instance.Init();
         }

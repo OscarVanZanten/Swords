@@ -13,23 +13,30 @@ namespace Swords.Util.Component
 {
     class PlayerCombat : Component
     {
+        private enum DashingState { Ready, WindUp, Dashing, WindDown }
+
         private GameObject player;
         private GameObject sword;
 
         private RigidBody playerBody;
         private PlayerMovement playerMove;
 
-        private GamePadState last;
+        private MouseState lastMouse;
 
-        private float dashForce = 80000000;
-        private float timer = 0;
-        private float maxTime = 0.33f;
-        private bool dashing = false;
+        private float dashForce = 500000000;
+        private float windUpTimer = 0;
+        private float windUpTime = 0.2f;
+        private float dashTimer = 0;
+        private float dashTime = 0.13f;
+        private float windDownTimer = 0;
+        private float windDownTime = 0.10f;
+        private float movementSlowDown = 0.3f;
+
+        private DashingState state = DashingState.Ready;
 
         public PlayerCombat(GameObject sword)
         {
             this.sword = sword;
-
             sword.Location.SetVector(new Vector2(0, 0));
         }
 
@@ -42,31 +49,127 @@ namespace Swords.Util.Component
 
         public void Update(float time)
         {
-            GamePadState current = GamePad.GetState(PlayerIndex.One);
-            if ((current.Triggers.Left > 0.8f || current.Triggers.Right > 0.8f) && last.Triggers.Left <  0.8f && last.Triggers.Right < 0.8f)
+            MouseState currentMouse = Mouse.GetState();
+            if (CanDash(currentMouse))
             {
-                playerBody.SetVelocity(new Vector2());
+                StartWindUp();
+            }
+
+            switch (state)
+            {
+                case DashingState.WindUp:
+                    UpdateWindUp(time);
+                    break;
+                case DashingState.Dashing:
+                    UpdateDash(time);
+                    break;
+                case DashingState.WindDown:
+                    UpdateWindDown(time);
+                    break;
+            }
+
+            if (windUpTimer > windUpTime)
+            {
+                if ((currentMouse.LeftButton != ButtonState.Pressed && currentMouse.RightButton != ButtonState.Pressed))
+                {
+                    EndWindUp(false);
+                }
+            }
+            else if (state == DashingState.WindUp)
+            {
+                if ((currentMouse.LeftButton != ButtonState.Pressed && currentMouse.RightButton != ButtonState.Pressed))
+                {
+                    EndWindUp(true);
+                }
+            }
+
+            if (dashTimer > dashTime)
+            {
+                EndDash();
+            }
+
+            if (windDownTimer > windDownTime)
+            {
+                EndWindDown();
+            }
+
+            lastMouse = currentMouse;
+        }
+
+        private void StartWindUp()
+        {
+            playerBody.SetVelocity(new Vector2());
+            playerMove.SetSlowDown(movementSlowDown);
+            state = DashingState.WindUp;
+        }
+
+        private void UpdateWindUp(float time)
+        {
+            windUpTimer += time;
+        }
+
+        private void EndWindUp(bool cancel)
+        {
+            playerMove.SetSlowDown(1f);
+            if (!cancel)
+            {
+                windUpTimer = 0;
                 playerMove.SetMoving(false);
-                dashing = true;
-                Vector2 thumb = player.Location.GetRetotation();
-                playerBody.AddForce(dashForce, player.Location.GetRetotation());
+                StartDash();
             }
-
-            if (dashing)
+            else
             {
-                timer += time;
-
+                state = DashingState.Ready;
             }
+        }
 
-            if (timer > maxTime)
+        private void StartDash()
+        {
+            playerMove.SetRotating(false);
+            state = DashingState.Dashing;
+        }
+
+        private void UpdateDash(float time)
+        {
+            dashTimer += time;
+            Vector2 thumb = player.Location.GetRetotation();
+            playerBody.AddForce(dashForce * time, player.Location.GetRetotation());
+        }
+
+        private void EndDash()
+        {
+            dashTimer = 0;
+            playerBody.SetVelocity(new Vector2(0, 0));
+            StartWindDown();
+        }
+
+        private void StartWindDown()
+        {
+            state = DashingState.WindDown;
+            playerMove.SetRotating(true);
+        }
+
+        private void UpdateWindDown(float time)
+        {
+            windDownTimer += time;
+        }
+
+        private void EndWindDown()
+        {
+            windDownTimer = 0;
+            playerMove.SetMoving(true);
+            state = DashingState.Ready;
+        }
+
+        private bool CanDash(MouseState currentMouse)
+        {
+            bool canDash = false;
+            if ((currentMouse.LeftButton == ButtonState.Pressed || currentMouse.RightButton == ButtonState.Pressed) &&
+                (lastMouse.LeftButton != ButtonState.Pressed && lastMouse.RightButton != ButtonState.Pressed))
             {
-                timer -= maxTime;
-                playerBody.SetVelocity(new Vector2(0, 0));
-                playerMove.SetMoving(true);
-                dashing = false;
+                canDash = true;
             }
-
-            last = current;
+            return canDash;
         }
     }
 }

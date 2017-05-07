@@ -25,12 +25,12 @@ namespace Swords.Levels.GameObjects
                         new AnimationPlayer(
                             new List<Animation>()
                             {
-                                ContentRegistry.Animations.Get("Grass-Animation")
+                                ContentRegistry.Animations.Get("Player-Stand")
                             }),"Player")
                     .AddChild(sword)
                     .AddBehavior(new Collider(new Swords.Util.Shapes.Rectangle(32, 32), true))
                     .AddBehavior(new RigidBody(100,0.01f, 1000, 0.001f, new Vector2(), 0))
-                    .AddBehavior(new PlayerMovement(250,5000000))
+                    .AddBehavior(new PlayerMovement(275,5000000))
                     .AddBehavior(new PlayerCombat(sword));
                 case "Object":
                     return new GameObject(loc,

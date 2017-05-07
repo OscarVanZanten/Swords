@@ -29,7 +29,7 @@ namespace Swords.Content
             ContentRegistry.Textures.Add("Grass8", Content.Load<Texture2D>("Grass8"));
             ContentRegistry.Textures.Add("Grass9", Content.Load<Texture2D>("Grass9"));
             ContentRegistry.Textures.Add("Sword", Content.Load<Texture2D>("Sword"));
-
+            ContentRegistry.Textures.Add("Character-stand", Content.Load<Texture2D>("Character_stand"));
 
         }
 
@@ -50,6 +50,15 @@ namespace Swords.Content
                         ContentRegistry.Textures.Get("Grass8"),
                         ContentRegistry.Textures.Get("Grass9")
                     }, 0.2f));
+
+            ContentRegistry.Animations.Add(
+                "Player-Stand",
+                new Animation(
+                    new Texture2D[]
+                    {
+                         ContentRegistry.Textures.Get("Character-stand")
+                    }, 0.2f));
+                
 
             ContentRegistry.Animations.Add(
                 "Sword-Animation",

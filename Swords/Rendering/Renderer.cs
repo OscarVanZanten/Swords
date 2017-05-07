@@ -29,10 +29,11 @@ namespace Swords.Rendering
 
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.SupportedDisplayModes.ElementAt(6).Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.SupportedDisplayModes.ElementAt(6).Width;
-
+            
             graphics.SynchronizeWithVerticalRetrace = true;
             graphics.PreferMultiSampling = true;
             graphics.ApplyChanges();
+            
             Camera.Zoom = 1.5f;
         }
 

@@ -38,13 +38,13 @@ namespace Swords.Util.Shapes
                 return false;
                 throw new ArgumentException("Lines are parallel");
             }
-            else
-            {
-                return true;
-            }
+            //else
+            //{
+            //    return true;
+            //}
 
-            float x = (B2 * C1 - B1 * C2) / delta;
-            float y = (A1 * C2 - A2 * C1) / delta;
+            //float x = (B2 * C1 - B1 * C2) / delta;
+            //float y = (A1 * C2 - A2 * C1) / delta;
 
             return false;
         }
