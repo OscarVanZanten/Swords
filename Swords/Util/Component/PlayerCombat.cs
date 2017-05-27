@@ -23,13 +23,13 @@ namespace Swords.Util.Component
 
         private MouseState lastMouse;
 
-        private float dashForce = 500000000;
+        private float dashVelocity = 100000;
         private float windUpTimer = 0;
         private float windUpTime = 0.2f;
         private float dashTimer = 0;
-        private float dashTime = 0.13f;
+        private float dashTime = 0.15f;
         private float windDownTimer = 0;
-        private float windDownTime = 0.10f;
+        private float windDownTime = 0.05f;
         private float movementSlowDown = 0.3f;
 
         private DashingState state = DashingState.Ready;
@@ -133,7 +133,7 @@ namespace Swords.Util.Component
         {
             dashTimer += time;
             Vector2 thumb = player.Location.GetRetotation();
-            playerBody.AddForce(dashForce * time, player.Location.GetRetotation());
+            playerBody.SetVelocity( player.Location.GetRetotation() * dashVelocity * time);
         }
 
         private void EndDash()

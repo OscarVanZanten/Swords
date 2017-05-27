@@ -70,6 +70,12 @@ namespace Swords.Util.Component
             velocity = vec;
         }
 
+        public void SetForce(float force, Vector2 direction)
+        {
+            SetVelocity(new Vector2(0, 0));
+            AddForce(force, direction);
+        }
+
         public void AddForce(float force, Vector2 direction)
         {
             if (direction.X == 0 && direction.Y == 0) { return; }
