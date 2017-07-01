@@ -23,7 +23,7 @@ namespace Swords.Util.Component
 
         private MouseState lastMouse;
 
-        private float dashVelocity = 100000;
+        private float dashVelocity = 250000;
         private float windUpTimer = 0;
         private float windUpTime = 0.2f;
         private float dashTimer = 0;

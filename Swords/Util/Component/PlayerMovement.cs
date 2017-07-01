@@ -21,6 +21,7 @@ namespace Swords.Util.Component
 
         private float Speed { get { return maxSpeed * slowdown; } }
         private float slowdown = 1f;
+        private float rotationDelay = 1f;
         private float maxSpeed;
         private float acceleration;
         private bool moving;
@@ -62,6 +63,7 @@ namespace Swords.Util.Component
             if (rotating)
             {
                 Vector2 rotation = (Mouse.GetState().Position.ToVector2() - Camera.Location * Camera.Zoom) - (entity.Location.Vector * Camera.Zoom);
+                
                 entity.Location.SetRotation(rotation);
             }
         }
@@ -79,6 +81,11 @@ namespace Swords.Util.Component
         public void SetSlowDown(float slowdown)
         {
             this.slowdown = slowdown;
+        }
+
+        public void SetRotationDelay(float delay)
+        {
+            this.rotationDelay = delay;
         }
     }
 }
